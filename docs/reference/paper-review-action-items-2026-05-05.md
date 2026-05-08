@@ -1,7 +1,7 @@
 ---
 type: reference
 status: in_progress
-updated_at: 2026-05-05
+updated_at: 2026-05-08
 canonical: true
 source: GPT 피드백 + Architect (Opus) 평가, 2026-05-05
 related: docs/reference/readme-paper-strategy-2026-05-05.md
@@ -88,7 +88,7 @@ framework 는 *organizing principle* 로 유지 (가설 분류 도구), 단 cont
 |---|---|---|---|
 | P1-1 | Related Work 차별화 추가 — AutoGen / MetaGPT / Reflexion / Self-Refine / Toolformer / Gorilla 1문장씩 | pending | Stage 6 본격화 시 |
 | P1-2 | Gemma 4 E4B 정확 표기 — 모델 카드 검증 후 일관 적용 ("4B effective" → "4.5B effective / 8B incl. embeddings" 추정) | pending | 검증 후 결정 |
-| P1-3 | LLM-as-judge 보조 평가 — Groq GPT-OSS 120B 로 H12 (그리고 가능 시 H11) 의 의미적 채점 추가. 본 keyword scorer 의 artifact 가능성 직접 반증 | pending | Stage 6 cross-model 인프라 활용 |
+| P1-3 | LLM-as-judge 보조 평가 — Groq GPT-OSS 120B 로 H12 (그리고 가능 시 H11) 의 의미적 채점 추가. 본 keyword scorer 의 artifact 가능성 직접 반증 | **deferred (future work)** — Stage 6 partial 완료 후 cross-model 의 gemma3:4b H12 outlier (+0.056) 가 §4.6.2 (b) style-mismatch 의 *partial* evidence 로 작동. 본 P1-3 자체는 별도 작업으로 deferred. infrastructure (`experiments/_external/llm_judge.py`) 는 이미 구현됨 | future |
 | P1-4 | 통계 5튜플 모든 가설 통일 — H1, H7, H8, H9a 의 Bootstrap CI 재산정 (현재 H10/H11/H12 만 5튜플 갖춤) | pending | Stage 6 와 병합 |
 | P1-5 | 논문 구조 reorder — Framework 작게, Section 5 Results 5 sub-section 으로 분리 (5.5 main claim) | pending | P0-2 와 함께 또는 직후 |
 | P1-6 | manual adjudication sample — synthesis-04 의 5 trial × 2 condition = 10 답변 사용자 직접 평가 (1-5점) | pending | 사용자 결정 |
@@ -173,3 +173,4 @@ GPT 정리한 5 가지 예상 반응 — Architect 평가:
 - 2026-05-05 v1: 초안. GPT 피드백 (16 항) + Architect 평가 (P0/P1/P2 분류 + 5 push back) 통합 정리. P1 망각 차단을 위한 영구 문서. 진행 시 본 문서의 status 표를 직접 갱신.
 - 2026-05-05 v2: P0-1 ~ P0-5 모두 **done**. 다음 차단 작업 없음 — P1 진입 가능. P1 의 LLM-as-judge replication (P1-3) 이 H12 핵심 약점 방어이므로 Stage 6 cross-model 인프라 (Groq client) 와 자연 결합 권장.
 - 2026-05-05 v3: Exp14 task-05 마감 + H13 verdict 통합 (paper draft v0.3, README 갱신은 사용자 결정 대기). Stage 5 통합 narrative 확정 — Position effect (H11/H12) + Iteration effect (H13) → "more structure is not monotonically better". P1-3 LLM-as-judge 의 의미가 더 커짐 (H13 의 keyword scorer 영향은 H12 보다 작지만, 의미적 채점이 두 가설 모두 보강). 새 P1 추가 후보: P1-7 (논문 결론 §7 작성, cross-model 후), P1-8 (LaTeX 변환 + arXiv 업로드 준비).
+- 2026-05-08 v4: Stage 6 cross-model **partial 마감** (H11 5 model 5/5 양수, H12 4 model 3/4 음수 + rnj-1:8b SIG p=0.036, gemma3:12b H12 28/75 partial). H14 verdict ⚠ 조건부 채택. paper draft v0.4 — §4.3 cross-model 본문 채움 + §4.6.2 의 (b) style-mismatch caveat 에 gemma3:4b outlier evidence 추가 + §4.7.4 Gemma 3 family tool-calling 부재 (family-level finding) 추가 + §1.3 / §6 갱신. P1-3 LLM-as-judge 는 deferred (future work) — gemma3:4b outlier 가 부분적으로 같은 caveat 을 입증. infrastructure 는 이미 구현됨. arXiv 업로드 차단 작업: P1-1 (Related Work 차별화), P1-4 (5튜플 통일), Conclusion §7.

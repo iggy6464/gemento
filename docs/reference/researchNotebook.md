@@ -1,9 +1,9 @@
 ---
 type: reference
 status: in_progress
-updated_at: 2026-05-05
+updated_at: 2026-05-08
 parts: [closed, active]
-note: 2026-05-05 v2 — Exp14 H13 추가 (Stage 5 첫 통계적 유의 negative)
+note: 2026-05-08 v3 — Stage 6 cross-model partial 추가 (4 model H11 + 3 model H12). H14 후보 — direction generalization 강함
 ---
 
 > **개념 프레임 canonical 문서**: [conceptFramework.md](./conceptFramework.md) — 4축 외부화 원리, 용어 정의, 축 ↔ 실험 매핑.
@@ -56,6 +56,7 @@ note: 2026-05-05 v2 — Exp14 H13 추가 (Stage 5 첫 통계적 유의 negative)
 | **H11** | **[Role 외부화 분리/추가 — Extractor Role]** 신규 Role (Extractor, 동일 Gemma 모델) 이 task prompt 의 claims/entities 를 사전 추출하여 A→B→C input 에 prefix 주입하면, A 부담 감소 + 정확도 향상 | ⚠ **조건부 채택 (양수 방향, 검정력 한계)** — 2026-05-04 Exp12: Δ(ext−base)=+0.0500 (양수, Exp11 정반대), Cohen d=+0.323 small 양수, Wilcoxon p=0.198 비유의 (n=15 한계). logic +0.125 / synthesis +0.050. logic-02 catastrophic 회복 (+0.30) + synthesis-05 (+0.45). Role 축 *분리/추가* 가 *강화* 보다 안전한 진화 방향 입증 | Exp12 |
 | **H12** | **[Role 외부화 분리/추가 — Reducer Role]** 신규 Role (Reducer, 동일 Gemma 모델) 이 ABC chain 의 final tattoo + final_answer 를 받아 *post-stage* 에서 정리/통합하면, keyword 매칭 정확도 + final answer 명료성 향상 | ⚠ **미결 (실효적 기각)** — 2026-05-05 Exp13: Δ(red−base)=−0.0533 (bug 제외) / −0.0711 (with bug, 음수 — Exp12 정반대), Cohen d=−0.323 (Exp12 +0.323 거울상), Wilcoxon p=0.180 비유의. logic −0.100 / math −0.083 / **synthesis −0.107 (5/5 task 음수)** / planning +0.100. 메커니즘 = **abstraction loss** (다중 출처/다중 추정 → 단일 추정 압축). **위치-효과 비대칭 확정**: pre-stage = 안전, post-stage = 위험 | Exp13 |
 | **H13** | **[Tool 외부화 — agent-active retrieval]** ABC 에이전트가 cycle 중 능동적으로 `search_chunks(query, top_k)` 호출하여 long-context document 의 관련 chunk retrieve 시, 32K context baseline (full document in prompt) 대비 정확도 + 효율 향상 | ⚠ **미결 (실효적 기각, SIG)** — 2026-05-05 Exp14: Δ(search−base)=−0.2200 (음수, Stage 5 의 가장 큰 음수). **Cohen d=−1.000 large effect**, **Wilcoxon p=0.0312 / paired t p=0.0115 — Stage 5 첫 통계적 유의 결과**. Bootstrap 95% CI [−0.36, −0.10] (0 미포함). 메커니즘 = **insufficient retrieval iterations on multi-hop tasks** (large-2hop 진단: 1 call → 0% / 2-3 calls → 100%) + premature termination ("document does not contain" 단정) + sufficient-context baseline saturation. needle (1-hop) 은 정상, multi-hop 만 fail. Tool 축 sub-distinction 발견: deterministic computation (H7/H8 +18~23pp) ≠ agent-iterative retrieval (H13 −22pp) | Exp14 |
+| **H14** | **[Cross-model generalization]** Stage 5 의 H11 (Extractor pre-stage 양수) / H12 (Reducer post-stage 음수) 의 *direction* 이 cross-family / cross-size 모델에서 generalize | ⚠ **조건부 채택 (direction match 강함, magnitude 모델 의존, 단일 SIG)** — 2026-05-08 Stage 6 partial (4 model H11 + 3 model H12). **H11 5/5 모델 양수** (gemma3:4b +0.079, gemma3:12b +0.002, rnj-1:8b +0.005, gpt-oss:20b +0.024 + Stage 5 +0.05). **H12 3/4 음수** (rnj-1:8b **SIG p=0.036 \|d\|=0.617**, gpt-oss:20b −0.010, Stage 5 −0.071, gemma3:4b +0.056 outlier — very weak baseline 의 *style mismatch artifact* = paper §4.6.2 caveat 직접 evidence). **Extractor magnitude 가 small model 에서 큼** (gemma3:4b +0.079 > gemma3:12b +0.002). **Gemma 3 family tool-calling 부분 미지원** (H13 search 0회 — family-level finding). 상세: `docs/reference/stage6-cross-model-analysis-2026-05-08.md` | Stage 6 |
 
 #### 축 ↔ 실험 매트릭스
 

@@ -1,7 +1,7 @@
 ---
 type: plan
-status: draft
-updated_at: 2026-05-05
+status: done
+updated_at: 2026-05-08
 slug: stage-6-cross-model-llm-as-judge
 version: 1
 author: Architect (Windows)

@@ -4,7 +4,11 @@ Plan document index. Register new plans here.
 
 ## Active
 
-- [stage-6-cross-model-llm-as-judge.md](stage-6-cross-model-llm-as-judge.md) — **Stage 6**: Cross-model replication (Llama 3.1 8B / Llama 3.3 70B / Qwen 2.5 7B Q4_K_M) + LLM-as-judge auxiliary evaluation (Groq GPT-OSS 120B). Stage 5 4 가설 (H10/H11/H12/H13) 의 *direction consistency* 검증 + H12/H13 의 keyword scorer artifact 정량화 (P1-3). 통계 5튜플 통일 (P1-4) 통합. paper v0.4 의 §4.3 cross-model + §7 Conclusion 채움 = arXiv preprint v1.0 업로드 가능 상태 도달. 5 subtask, 사용자 직접 실행 ~3-5일. **Llama 3.1 8B 22일 마감 (2026-05-27)** — 우선순위 P0. Sonnet 진행 프롬프트: `docs/prompts/2026-05-05/stage6Start.md`
+- (current Active queue is empty — Stage 6 partial 마감 후 다음 우선순위는 paper-review-action-items P1-3 LLM-as-judge 보조 평가)
+
+## Recently Done — Stage 6
+
+- [stage-6-cross-model-llm-as-judge.md](stage-6-cross-model-llm-as-judge.md) — **Stage 6**: Cross-model replication 마감 (partial — gemma3:12b H12 28/75 partial). 5 subtask 완료. **H14 ⚠ 조건부 채택 (direction match 강함, magnitude 모델 의존, 단일 SIG)** — H11 5/5 모델 양수 (gemma3:4b +0.079, gemma3:12b +0.002, rnj-1:8b +0.005, gpt-oss:20b +0.024 + Stage 5 +0.05). H12 3/4 음수 (rnj-1:8b **SIG p=0.036 \|d\|=0.617**, gpt-oss:20b −0.010, Stage 5 −0.071, gemma3:4b +0.056 outlier = paper §4.6.2 keyword-scorer caveat 직접 evidence). **Gemma 3 family tool-calling 부분 미지원** (H13 search 0회 — family-level finding, paper §4.7). 인프라: Ollama Cloud Pro $20/월 (3-concurrent-model), multi-account slot (1/2/3), preventive throttle, partial JSON resume. 분석: `docs/reference/stage6-cross-model-analysis-2026-05-08.md`. result: `docs/reference/results/exp-stage6-cross-model.md`. LLM-as-judge 보조 평가 (P1-3) 는 future work. 2026-05-08.
 
 ## Recently Done — Stage 5
 

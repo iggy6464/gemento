@@ -1,0 +1,1481 @@
+{
+  "schema_version": "1.0",
+  "experiment": "stage6_cross_model",
+  "model": {
+    "name": "gemma3:4b",
+    "engine": "ollama_cloud",
+    "endpoint": "groq"
+  },
+  "sampling_params": {
+    "temperature": 0.1,
+    "top_p": null,
+    "max_tokens": 4096,
+    "seed": null
+  },
+  "scorer_version": "v3",
+  "taskset_version": "a6104d1",
+  "started_at": "2026-05-06T09:31:13.453179+09:00",
+  "ended_at": "2026-05-06T09:32:46.664495+09:00",
+  "model_key": "gemma3_4b_ollama",
+  "hypotheses": [
+    "h11"
+  ],
+  "trials_per_condition": 1,
+  "max_cycles": 8,
+  "run_judge": false,
+  "trials": [
+    {
+      "hypothesis": "h11",
+      "condition": "baseline_abc",
+      "model_key": "gemma3_4b_ollama",
+      "task_id": "math-01",
+      "trial_idx": 0,
+      "task_question": "A store sells apples at $2 each and oranges at $3 each. A customer buys some apples and oranges, spending exactly $47. The customer buys more apples than oranges. The total number of fruits is 20. How many apples and how many oranges did the customer buy?",
+      "task_expected_answer": "13 apples and 7 oranges",
+      "final_answer": "The customer bought 13 apples and 7 oranges.",
+      "accuracy_v3": 1.0,
+      "cycles": 7,
+      "duration_ms": 42604,
+      "error": null,
+      "tattoo_history": [
+        {
+          "meta": {
+            "tattoo_id": "c834fc26a067",
+            "task_id": "math-01_h11_cm_baseline_t0",
+            "loop_index": 1,
+            "parent_id": "b5b4e98ca2b7",
+            "created_at": 1778027476.2155747
+          },
+          "goal": {
+            "objective": "주어진 수학 문제를 단계적으로 풀어라.\n\nProblem:\nA store sells apples at $2 each and oranges at $3 each. A customer buys some apples and oranges, spending exactly $47. The customer buys more apples than oranges. The total number of fruits is 20. How many apples and how many oranges did the customer buy?",
+            "constraints": [
+              "정확한 숫자를 구해야 한다",
+              "검산을 해야 한다"
+            ],
+            "termination": "모든 비판이 수렴하고 최종 답변이 확정되면 종료"
+          },
+          "state": {
+            "phase": "DECOMPOSE",
+            "assertions": [],
+            "open_questions": [
+              "What method can be used to solve the system of equations?"
+            ],
+            "next_directive": "",
+            "critique_log": [
+              {
+                "cycle": 1,
+                "phase": "DECOMPOSE",
+                "judgments": null
+              }
+            ]
+          },
+          "handoff": {
+            "a2b": {
+              "blueprint": "1. Define variables: a = number of apples, o = number of oranges. 2. Formulate equations based on the given information: a + 3o = 47 and a + o = 20. 3. Solve the system of equations to find a and o. 4. Verify the solution by checking if the conditions (more apples than oranges and total fruits = 20) are met.",
+              "constraints": [
+                "Solve the system of linear equations accurately.",
+                "Verify the solution against the given constraints."
+              ],
+              "prioritized_focus": "Solving the system of equations to find the number of apples and oranges.",
+              "open_questions": [
+                "How do we solve the system of equations?",
+                "Are there any constraints we haven't considered?"
+              ]
+            }
+          },
+          "integrity": {
+            "assertion_hash": "4f53cda18c2baa0c",
+            "chain_hash": "155a229fd8af10bd",
+            "confidence": 0.8
+          }
+        },
+        {
+          "meta": {
+            "tattoo_id": "de84cd9e3d6c",
+            "task_id": "math-01_h11_cm_baseline_t0",
+            "loop_index": 2,
+            "parent_id": "c834fc26a067",
+            "created_at": 1778027480.2138915
+          },
+          "goal": {
+            "objective": "주어진 수학 문제를 단계적으로 풀어라.\n\nProblem:\nA store sells apples at $2 each and oranges at $3 each. A customer buys some apples and oranges, spending exactly $47. The customer buys more apples than oranges. The total number of fruits is 20. How many apples and how many oranges did the customer buy?",
+            "constraints": [
+              "정확한 숫자를 구해야 한다",
+              "검산을 해야 한다"
+            ],
+            "termination": "모든 비판이 수렴하고 최종 답변이 확정되면 종료"
+          },
+          "state": {
+            "phase": "DECOMPOSE",
+            "assertions": [],
+            "open_questions": [
+              "What method can be used to solve the system of equations?"
+            ],
+            "next_directive": "",
+            "critique_log": [
+              {
+                "cycle": 2,
+                "phase": "DECOMPOSE",
+                "judgments": null
+              }
+            ]
+          },
+          "handoff": {
+            "a2b": {
+              "blueprint": "1. Define variables: Let 'a' be the number of apples and 'o' be the number of oranges. 2. Formulate equations based on the given information: 2a + 3o = 47 (total cost) a + o = 20 (total number of fruits) a > o (more apples than oranges) 3. Solve the system of equations.",
+              "constraints": [
+                "The solution must satisfy all given constraints.",
+                "The number of apples and oranges must be non-negative integers."
+              ],
+              "prioritized_focus": "Formulate the equations accurately based on the problem description.",
+              "open_questions": [
+                "What method is best suited to solve the system of equations?",
+                "How to ensure the solution is an integer?"
+              ]
+            }
+          },
+          "integrity": {
+            "assertion_hash": "4f53cda18c2baa0c",
+            "chain_hash": "4232798b0ad3a060",
+            "confidence": 0.9
+          }
+        },
+        {
+          "meta": {
+            "tattoo_id": "ad60b3dbd453",
+            "task_id": "math-01_h11_cm_baseline_t0",
+            "loop_index": 3,
+            "parent_id": "de84cd9e3d6c",
+            "created_at": 1778027483.8548915
+          },
+          "goal": {
+            "objective": "주어진 수학 문제를 단계적으로 풀어라.\n\nProblem:\nA store sells apples at $2 each and oranges at $3 each. A customer buys some apples and oranges, spending exactly $47. The customer buys more apples than oranges. The total number of fruits is 20. How many apples and how many oranges did the customer buy?",
+            "constraints": [
+              "정확한 숫자를 구해야 한다",
+              "검산을 해야 한다"
+            ],
+            "termination": "모든 비판이 수렴하고 최종 답변이 확정되면 종료"
+          },
+          "state": {
+            "phase": "DECOMPOSE",
+            "assertions": [],
+            "open_questions": [
+              "What method can be used to solve the system of equations?"
+            ],
+            "next_directive": "",
+            "critique_log": [
+              {
+                "cycle": 3,
+                "phase": "DECOMPOSE",
+                "judgments": null
+              }
+            ]
+          },
+          "handoff": {
+            "a2b": {
+              "blueprint": "1. Define variables: a = number of apples, o = number of oranges. 2. Formulate equations based on the given information: 2a + 3o = 47 and a + o = 20. 3. Solve the system of equations. 4. Verify the solution against the constraint a > o.",
+              "constraints": [
+                "Solve the system of equations accurately.",
+                "Verify the solution satisfies all given constraints."
+              ],
+              "prioritized_focus": "Solve the system of equations to find the values of 'a' and 'o'.",
+              "open_questions": [
+                "What method is most efficient for solving this system of equations?",
+                "How to verify the solution?"
+              ]
+            }
+          },
+          "integrity": {
+            "assertion_hash": "4f53cda18c2baa0c",
+            "chain_hash": "b6ea957a3bc59bfd",
+            "confidence": 0.7
+          }
+        },
+        {
+          "meta": {
+            "tattoo_id": "df9cb143eea4",
+            "task_id": "math-01_h11_cm_baseline_t0",
+            "loop_index": 4,
+            "parent_id": "ad60b3dbd453",
+            "created_at": 1778027488.4259343
+          },
+          "goal": {
+            "objective": "주어진 수학 문제를 단계적으로 풀어라.\n\nProblem:\nA store sells apples at $2 each and oranges at $3 each. A customer buys some apples and oranges, spending exactly $47. The customer buys more apples than oranges. The total number of fruits is 20. How many apples and how many oranges did the customer buy?",
+            "constraints": [
+              "정확한 숫자를 구해야 한다",
+              "검산을 해야 한다"
+            ],
+            "termination": "모든 비판이 수렴하고 최종 답변이 확정되면 종료"
+          },
+          "state": {
+            "phase": "INVESTIGATE",
+            "assertions": [
+              {
+                "id": "8dc524e9",
+                "content": "Let a represent the number of apples and o represent the number of oranges.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "0418556c",
+                "content": "The total number of fruits is 20: a + o = 20",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "9c62ca6b",
+                "content": "The total cost is $47: 2a + 3o = 47",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              }
+            ],
+            "open_questions": [
+              "What method can be used to solve the system of equations?"
+            ],
+            "next_directive": "",
+            "critique_log": [
+              {
+                "cycle": 4,
+                "phase": "INVESTIGATE",
+                "judgments": [
+                  {
+                    "assertion_id": "8dc524e9",
+                    "status": "valid",
+                    "reason": "The assertion correctly defines the variables 'a' and 'o' representing the number of apples and oranges, respectively. This is a fundamental step in solving the problem."
+                  },
+                  {
+                    "assertion_id": "0418556c",
+                    "status": "valid",
+                    "reason": "This assertion accurately represents the first equation derived from the problem statement: the total number of fruits is 20."
+                  },
+                  {
+                    "assertion_id": "9c62ca6b",
+                    "status": "valid",
+                    "reason": "This assertion correctly represents the second equation derived from the problem statement: the total cost of apples and oranges is $47."
+                  }
+                ]
+              }
+            ]
+          },
+          "handoff": {
+            "a2b": {
+              "blueprint": "1. Define variables: Let 'a' be the number of apples and 'o' be the number of oranges. 2. Formulate equations based on the given information: a + o = 20 (total number of fruits) and 2a + 3o = 47 (total cost). 3. Solve the system of equations using substitution or elimination.",
+              "constraints": [
+                "The solution must satisfy both equations.",
+                "The number of apples and oranges must be non-negative integers."
+              ],
+              "prioritized_focus": "Solving the system of equations to find the number of apples and oranges.",
+              "open_questions": [
+                "Which method (substitution or elimination) is more efficient for this problem?"
+              ]
+            }
+          },
+          "integrity": {
+            "assertion_hash": "9b0dcaa7c2593e6b",
+            "chain_hash": "c4a1a6a78c7a5d34",
+            "confidence": 0.8
+          }
+        },
+        {
+          "meta": {
+            "tattoo_id": "57ab5e461e33",
+            "task_id": "math-01_h11_cm_baseline_t0",
+            "loop_index": 5,
+            "parent_id": "df9cb143eea4",
+            "created_at": 1778027496.0317678
+          },
+          "goal": {
+            "objective": "주어진 수학 문제를 단계적으로 풀어라.\n\nProblem:\nA store sells apples at $2 each and oranges at $3 each. A customer buys some apples and oranges, spending exactly $47. The customer buys more apples than oranges. The total number of fruits is 20. How many apples and how many oranges did the customer buy?",
+            "constraints": [
+              "정확한 숫자를 구해야 한다",
+              "검산을 해야 한다"
+            ],
+            "termination": "모든 비판이 수렴하고 최종 답변이 확정되면 종료"
+          },
+          "state": {
+            "phase": "INVESTIGATE",
+            "assertions": [
+              {
+                "id": "8dc524e9",
+                "content": "Let a represent the number of apples and o represent the number of oranges.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "0418556c",
+                "content": "The total number of fruits is 20: a + o = 20",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "9c62ca6b",
+                "content": "The total cost is $47: 2a + 3o = 47",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "e7663637",
+                "content": "The customer bought 13 apples and 7 oranges.",
+                "source_loop": 5,
+                "confidence": 0.99,
+                "status": "active",
+                "evidence_ref": {
+                  "chunk_id": "current"
+                }
+              }
+            ],
+            "open_questions": [
+              "Are the solution's values for 'a' and 'o' integers?",
+              "Does the solution satisfy the condition that the customer buys more apples than oranges?"
+            ],
+            "next_directive": "",
+            "critique_log": [
+              {
+                "cycle": 5,
+                "phase": "INVESTIGATE",
+                "judgments": [
+                  {
+                    "assertion_id": "8dc524e9",
+                    "status": "valid",
+                    "reason": "The assertion correctly defines the variables 'a' and 'o' representing the number of apples and oranges, respectively."
+                  },
+                  {
+                    "assertion_id": "0418556c",
+                    "status": "valid",
+                    "reason": "This assertion accurately represents the first equation derived from the problem statement: the total number of fruits is 20."
+                  },
+                  {
+                    "assertion_id": "9c62ca6b",
+                    "status": "valid",
+                    "reason": "This assertion correctly represents the second equation derived from the problem statement: the total cost is $47."
+                  },
+                  {
+                    "assertion_id": "e7663637",
+                    "status": "suspect",
+                    "reason": "While the assertion states the solution is 13 apples and 7 oranges, it needs verification against the original equations. Let's check if this solution satisfies both a + o = 20 and 2a + 3o = 47."
+                  }
+                ]
+              }
+            ]
+          },
+          "handoff": {
+            "a2b": {
+              "blueprint": "Solve the system of equations a + o = 20 and 2a + 3o = 47 using substitution.  Express 'a' in terms of 'o' from the first equation, substitute into the second equation, solve for 'o', and then solve for 'a'.  Verify the solution.",
+              "constraints": [
+                "Use substitution method to solve the system.",
+                "Ensure the solution satisfies both original equations.",
+                "The number of apples and oranges must be integers."
+              ],
+              "prioritized_focus": "Verify the solution to ensure it meets all the problem's conditions.",
+              "open_questions": [
+                "Are the solution's values for 'a' and 'o' integers?",
+                "Does the solution satisfy the condition that the customer buys more apples than oranges?"
+              ]
+            },
+            "b2c": {
+              "implementation_summary": "I have reviewed the assertions and confirmed that they accurately represent the problem's constraints and equations. The blueprint outlines a standard approach to solving this system of linear equations. I will now proceed to solve the system to find the number of apples and oranges.",
+              "deviations": [],
+              "self_test_results": "All assertions are valid and consistent with the provided blueprint and constraints. No deviations from the blueprint were observed during the review."
+            }
+          },
+          "integrity": {
+            "assertion_hash": "4bc61b9ae68c11db",
+            "chain_hash": "4a72bee15ff56394",
+            "confidence": 0.99
+          }
+        },
+        {
+          "meta": {
+            "tattoo_id": "6762595c6737",
+            "task_id": "math-01_h11_cm_baseline_t0",
+            "loop_index": 6,
+            "parent_id": "57ab5e461e33",
+            "created_at": 1778027504.1026893
+          },
+          "goal": {
+            "objective": "주어진 수학 문제를 단계적으로 풀어라.\n\nProblem:\nA store sells apples at $2 each and oranges at $3 each. A customer buys some apples and oranges, spending exactly $47. The customer buys more apples than oranges. The total number of fruits is 20. How many apples and how many oranges did the customer buy?",
+            "constraints": [
+              "정확한 숫자를 구해야 한다",
+              "검산을 해야 한다"
+            ],
+            "termination": "모든 비판이 수렴하고 최종 답변이 확정되면 종료"
+          },
+          "state": {
+            "phase": "INVESTIGATE",
+            "assertions": [
+              {
+                "id": "8dc524e9",
+                "content": "Let a represent the number of apples and o represent the number of oranges.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "0418556c",
+                "content": "The total number of fruits is 20: a + o = 20",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "9c62ca6b",
+                "content": "The total cost is $47: 2a + 3o = 47",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "e7663637",
+                "content": "The customer bought 13 apples and 7 oranges.",
+                "source_loop": 5,
+                "confidence": 0.99,
+                "status": "active",
+                "evidence_ref": {
+                  "chunk_id": "current"
+                }
+              },
+              {
+                "id": "ff73da32",
+                "content": "The customer bought 13 apples and 7 oranges.",
+                "source_loop": 6,
+                "confidence": 0.99,
+                "status": "active",
+                "evidence_ref": {
+                  "chunk_id": "current"
+                }
+              }
+            ],
+            "open_questions": [],
+            "next_directive": "",
+            "critique_log": [
+              {
+                "cycle": 6,
+                "phase": "INVESTIGATE",
+                "judgments": [
+                  {
+                    "assertion_id": "8dc524e9",
+                    "status": "valid",
+                    "reason": "The assertion that 'a' represents apples and 'o' represents oranges is a standard and correct way to define the variables in the problem."
+                  },
+                  {
+                    "assertion_id": "0418556c",
+                    "status": "valid",
+                    "reason": "The equation 'a + o = 20' accurately represents the constraint that the total number of fruits is 20."
+                  },
+                  {
+                    "assertion_id": "9c62ca6b",
+                    "status": "valid",
+                    "reason": "The equation '2a + 3o = 47' correctly represents the constraint that the total cost is $47."
+                  },
+                  {
+                    "assertion_id": "e7663637",
+                    "status": "valid",
+                    "reason": "The assertion that the customer bought 13 apples and 7 oranges is the solution to the system of equations and satisfies all given constraints."
+                  },
+                  {
+                    "assertion_id": "ff73da32",
+                    "status": "valid",
+                    "reason": "This assertion is redundant with assertion 'e7663637' and confirms the same solution."
+                  }
+                ]
+              }
+            ]
+          },
+          "handoff": {
+            "a2b": {
+              "blueprint": "The problem is solved by setting up a system of two linear equations: a + o = 20 and 2a + 3o = 47. Solving this system yields a = 13 and o = 7.  The solution satisfies all constraints.",
+              "constraints": [
+                "The number of apples (a) and oranges (o) must be integers.",
+                "The total number of fruits must be 20.",
+                "The total cost must be $47."
+              ],
+              "prioritized_focus": "Confirming the solution's validity and integer nature.",
+              "open_questions": []
+            },
+            "b2c": {
+              "implementation_summary": "I reviewed the assertion 'e7663637' and found it requires verification. I will substitute a = 13 and o = 7 into the original equations to confirm the solution.",
+              "deviations": [],
+              "self_test_results": "Substituting a = 13 and o = 7 into a + o = 20 yields 13 + 7 = 20, which is correct. Substituting into 2a + 3o = 47 yields 2(13) + 3(7) = 26 + 21 = 47, which is also correct. Therefore, the solution a = 13 and o = 7 satisfies both equations."
+            }
+          },
+          "integrity": {
+            "assertion_hash": "3c3f24b016d98379",
+            "chain_hash": "af862b4a40af5cf6",
+            "confidence": 1.0
+          }
+        },
+        {
+          "meta": {
+            "tattoo_id": "fbc3e9c53269",
+            "task_id": "math-01_h11_cm_baseline_t0",
+            "loop_index": 7,
+            "parent_id": "6762595c6737",
+            "created_at": 1778027511.1434476
+          },
+          "goal": {
+            "objective": "주어진 수학 문제를 단계적으로 풀어라.\n\nProblem:\nA store sells apples at $2 each and oranges at $3 each. A customer buys some apples and oranges, spending exactly $47. The customer buys more apples than oranges. The total number of fruits is 20. How many apples and how many oranges did the customer buy?",
+            "constraints": [
+              "정확한 숫자를 구해야 한다",
+              "검산을 해야 한다"
+            ],
+            "termination": "모든 비판이 수렴하고 최종 답변이 확정되면 종료"
+          },
+          "state": {
+            "phase": "CONVERGED",
+            "assertions": [
+              {
+                "id": "8dc524e9",
+                "content": "Let a represent the number of apples and o represent the number of oranges.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "0418556c",
+                "content": "The total number of fruits is 20: a + o = 20",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "9c62ca6b",
+                "content": "The total cost is $47: 2a + 3o = 47",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "e7663637",
+                "content": "The customer bought 13 apples and 7 oranges.",
+                "source_loop": 5,
+                "confidence": 0.99,
+                "status": "active",
+                "evidence_ref": {
+                  "chunk_id": "current"
+                }
+              },
+              {
+                "id": "ff73da32",
+                "content": "The customer bought 13 apples and 7 oranges.",
+                "source_loop": 6,
+                "confidence": 0.99,
+                "status": "active",
+                "evidence_ref": {
+                  "chunk_id": "current"
+                }
+              }
+            ],
+            "open_questions": [],
+            "next_directive": "The customer bought 13 apples and 7 oranges.",
+            "critique_log": [
+              {
+                "cycle": 7,
+                "phase": "SYNTHESIZE",
+                "judgments": [
+                  {
+                    "assertion_id": "8dc524e9",
+                    "status": "valid",
+                    "reason": "This assertion correctly defines the variables used to represent the number of apples and oranges."
+                  },
+                  {
+                    "assertion_id": "0418556c",
+                    "status": "valid",
+                    "reason": "This assertion accurately represents the equation derived from the total number of fruits."
+                  },
+                  {
+                    "assertion_id": "9c62ca6b",
+                    "status": "valid",
+                    "reason": "This assertion correctly represents the equation for the total cost of the fruits."
+                  },
+                  {
+                    "assertion_id": "e7663637",
+                    "status": "valid",
+                    "reason": "This assertion confirms the solution provided in the handoff, which is the correct answer to the problem."
+                  },
+                  {
+                    "assertion_id": "ff73da32",
+                    "status": "valid",
+                    "reason": "This assertion confirms the solution provided in the handoff, which is the correct answer to the problem."
+                  }
+                ]
+              }
+            ]
+          },
+          "handoff": {
+            "a2b": {
+              "blueprint": "The solution is as follows: The customer bought 13 apples and 7 oranges.  The total cost was $47 (13 * $2 + 7 * $3 = $26 + $21 = $47). The total number of fruits was 20 (13 + 7 = 20).",
+              "constraints": [],
+              "prioritized_focus": "Finalize the answer and confirm its correctness.",
+              "open_questions": []
+            },
+            "b2c": {
+              "implementation_summary": "The problem was solved by setting up a system of two linear equations: a + o = 20 and 2a + 3o = 47. Solving this system results in a = 13 and o = 7.  These values satisfy the given constraints: the total number of fruits is 13 + 7 = 20, and the total cost is 2(13) + 3(7) = 26 + 21 = 47.  Furthermore, the number of apples (13) is greater than the number of oranges (7).",
+              "deviations": [],
+              "self_test_results": "The solution a=13 and o=7 was verified by substituting these values into the original equations.  13 + 7 = 20 and 2(13) + 3(7) = 47.  The number of apples is greater than the number of oranges.  The solution appears to be correct and satisfies all constraints."
+            }
+          },
+          "integrity": {
+            "assertion_hash": "3c3f24b016d98379",
+            "chain_hash": "51744496a6f0d692",
+            "confidence": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "hypothesis": "h11",
+      "condition": "extractor_abc",
+      "model_key": "gemma3_4b_ollama",
+      "task_id": "math-01",
+      "trial_idx": 0,
+      "task_question": "A store sells apples at $2 each and oranges at $3 each. A customer buys some apples and oranges, spending exactly $47. The customer buys more apples than oranges. The total number of fruits is 20. How many apples and how many oranges did the customer buy?",
+      "task_expected_answer": "13 apples and 7 oranges",
+      "final_answer": "The customer bought 13 apples and 7 oranges.",
+      "accuracy_v3": 1.0,
+      "cycles": 7,
+      "duration_ms": 50601,
+      "error": null,
+      "tattoo_history": [
+        {
+          "meta": {
+            "tattoo_id": "122de1f1031a",
+            "task_id": "math-01_cm_extractor_t0",
+            "loop_index": 1,
+            "parent_id": "7d31f837e836",
+            "created_at": 1778027520.42366
+          },
+          "goal": {
+            "objective": "주어진 수학 문제를 단계적으로 풀어라.\n\nProblem:\n## Pre-extracted structure (from Extractor agent):\n```json\n{\n  \"claims\": [\n    {\"text\": \"Apples cost $2 each.\", \"type\": \"fact\"},\n    {\"text\": \"Oranges cost $3 each.\", \"type\": \"fact\"},\n    {\"text\": \"The customer spends $47.\", \"type\": \"fact\"},\n    {\"text\": \"The customer buys more apples than oranges.\", \"type\": \"constraint\"},\n    {\"text\": \"The total number of fruits is 20.\", \"type\": \"fact\"}\n  ],\n  \"entities\": [\n    {\"name\": \"apples\", \"role\": \"object\"},\n    {\"name\": \"oranges\", \"role\": \"object\"},\n    {\"name\": \"$2\", \"role\": \"quantity\"},\n    {\"name\": \"$3\", \"role\": \"quantity\"},\n    {\"name\": \"$47\", \"role\": \"quantity\"},\n    {\"name\": \"20\", \"role\": \"quantity\"}\n  ]\n}\n```\n\n## Original task prompt:\nA store sells apples at $2 each and oranges at $3 each. A customer buys some apples and oranges, spending exactly $47. The customer buys more apples than oranges. The total number of fruits is 20. How many apples and how many oranges did the customer buy?",
+            "constraints": [
+              "정확한 숫자를 구해야 한다",
+              "검산을 해야 한다"
+            ],
+            "termination": "모든 비판이 수렴하고 최종 답변이 확정되면 종료"
+          },
+          "state": {
+            "phase": "DECOMPOSE",
+            "assertions": [],
+            "open_questions": [
+              "What method can be used to solve the system of equations?",
+              "Are the solutions integers?"
+            ],
+            "next_directive": "",
+            "critique_log": [
+              {
+                "cycle": 1,
+                "phase": "DECOMPOSE",
+                "judgments": null
+              }
+            ]
+          },
+          "handoff": {
+            "a2b": {
+              "blueprint": "1. Define variables: a = number of apples, o = number of oranges. 2. Formulate equations based on the given information: a + o = 20, 2a + 3o = 47. 3. Solve the system of equations. 4. Check if a > o and if the solution satisfies the constraints.",
+              "constraints": [
+                "Solve the system of equations accurately.",
+                "Verify that the solution satisfies all constraints (a > o, a + o = 20, 2a + 3o = 47).",
+                "Provide integer solutions for a and o."
+              ],
+              "prioritized_focus": "Solve the system of equations to find the values of 'a' and 'o'.",
+              "open_questions": [
+                "How do we solve the system of equations?",
+                "Are there any constraints on the solutions (e.g., must be integers)?",
+                "How do we verify the solution?"
+              ]
+            }
+          },
+          "integrity": {
+            "assertion_hash": "4f53cda18c2baa0c",
+            "chain_hash": "155a229fd8af10bd",
+            "confidence": 0.7
+          }
+        },
+        {
+          "meta": {
+            "tattoo_id": "07ecc4c35c37",
+            "task_id": "math-01_cm_extractor_t0",
+            "loop_index": 2,
+            "parent_id": "122de1f1031a",
+            "created_at": 1778027524.155314
+          },
+          "goal": {
+            "objective": "주어진 수학 문제를 단계적으로 풀어라.\n\nProblem:\n## Pre-extracted structure (from Extractor agent):\n```json\n{\n  \"claims\": [\n    {\"text\": \"Apples cost $2 each.\", \"type\": \"fact\"},\n    {\"text\": \"Oranges cost $3 each.\", \"type\": \"fact\"},\n    {\"text\": \"The customer spends $47.\", \"type\": \"fact\"},\n    {\"text\": \"The customer buys more apples than oranges.\", \"type\": \"constraint\"},\n    {\"text\": \"The total number of fruits is 20.\", \"type\": \"fact\"}\n  ],\n  \"entities\": [\n    {\"name\": \"apples\", \"role\": \"object\"},\n    {\"name\": \"oranges\", \"role\": \"object\"},\n    {\"name\": \"$2\", \"role\": \"quantity\"},\n    {\"name\": \"$3\", \"role\": \"quantity\"},\n    {\"name\": \"$47\", \"role\": \"quantity\"},\n    {\"name\": \"20\", \"role\": \"quantity\"}\n  ]\n}\n```\n\n## Original task prompt:\nA store sells apples at $2 each and oranges at $3 each. A customer buys some apples and oranges, spending exactly $47. The customer buys more apples than oranges. The total number of fruits is 20. How many apples and how many oranges did the customer buy?",
+            "constraints": [
+              "정확한 숫자를 구해야 한다",
+              "검산을 해야 한다"
+            ],
+            "termination": "모든 비판이 수렴하고 최종 답변이 확정되면 종료"
+          },
+          "state": {
+            "phase": "DECOMPOSE",
+            "assertions": [],
+            "open_questions": [
+              "What method can be used to solve the system of equations?",
+              "Are the solutions integers?"
+            ],
+            "next_directive": "",
+            "critique_log": [
+              {
+                "cycle": 2,
+                "phase": "DECOMPOSE",
+                "judgments": null
+              }
+            ]
+          },
+          "handoff": {
+            "a2b": {
+              "blueprint": "1. Define variables: a = number of apples, o = number of oranges. 2. Formulate equations: 2a + 3o = 47 (total cost) a + o = 20 (total fruits) a > o (more apples than oranges) 3. Solve the system of equations.",
+              "constraints": [
+                "Solve for integer values of a and o.",
+                "Verify that a > o and a + o = 20."
+              ],
+              "prioritized_focus": "Setting up the equations and ensuring they accurately represent the problem's constraints.",
+              "open_questions": [
+                "What method is best suited for solving this system of equations?",
+                "How can we ensure the solution is an integer and satisfies the inequality a > o?"
+              ]
+            }
+          },
+          "integrity": {
+            "assertion_hash": "4f53cda18c2baa0c",
+            "chain_hash": "4232798b0ad3a060",
+            "confidence": 0.8
+          }
+        },
+        {
+          "meta": {
+            "tattoo_id": "b4fe1a9ef932",
+            "task_id": "math-01_cm_extractor_t0",
+            "loop_index": 3,
+            "parent_id": "07ecc4c35c37",
+            "created_at": 1778027528.345152
+          },
+          "goal": {
+            "objective": "주어진 수학 문제를 단계적으로 풀어라.\n\nProblem:\n## Pre-extracted structure (from Extractor agent):\n```json\n{\n  \"claims\": [\n    {\"text\": \"Apples cost $2 each.\", \"type\": \"fact\"},\n    {\"text\": \"Oranges cost $3 each.\", \"type\": \"fact\"},\n    {\"text\": \"The customer spends $47.\", \"type\": \"fact\"},\n    {\"text\": \"The customer buys more apples than oranges.\", \"type\": \"constraint\"},\n    {\"text\": \"The total number of fruits is 20.\", \"type\": \"fact\"}\n  ],\n  \"entities\": [\n    {\"name\": \"apples\", \"role\": \"object\"},\n    {\"name\": \"oranges\", \"role\": \"object\"},\n    {\"name\": \"$2\", \"role\": \"quantity\"},\n    {\"name\": \"$3\", \"role\": \"quantity\"},\n    {\"name\": \"$47\", \"role\": \"quantity\"},\n    {\"name\": \"20\", \"role\": \"quantity\"}\n  ]\n}\n```\n\n## Original task prompt:\nA store sells apples at $2 each and oranges at $3 each. A customer buys some apples and oranges, spending exactly $47. The customer buys more apples than oranges. The total number of fruits is 20. How many apples and how many oranges did the customer buy?",
+            "constraints": [
+              "정확한 숫자를 구해야 한다",
+              "검산을 해야 한다"
+            ],
+            "termination": "모든 비판이 수렴하고 최종 답변이 확정되면 종료"
+          },
+          "state": {
+            "phase": "DECOMPOSE",
+            "assertions": [],
+            "open_questions": [
+              "What method can be used to solve the system of equations?",
+              "Are the solutions integers?"
+            ],
+            "next_directive": "",
+            "critique_log": [
+              {
+                "cycle": 3,
+                "phase": "DECOMPOSE",
+                "judgments": null
+              }
+            ]
+          },
+          "handoff": {
+            "a2b": {
+              "blueprint": "1. Define variables: Let 'a' be the number of apples and 'o' be the number of oranges. 2. Formulate equations based on the given information:  Cost equation: 2a + 3o = 47.  Quantity equation: a > o.  Total fruit equation: a + o = 20. 3. Solve the system of equations.",
+              "constraints": [
+                "Solve the system of equations to find integer values for 'a' and 'o'.",
+                "Verify that a > o and a + o = 20."
+              ],
+              "prioritized_focus": "Formulate the system of equations accurately to guide the solution.",
+              "open_questions": [
+                "What method is best to solve the system of equations?",
+                "Will the solution be integers?"
+              ]
+            }
+          },
+          "integrity": {
+            "assertion_hash": "4f53cda18c2baa0c",
+            "chain_hash": "b6ea957a3bc59bfd",
+            "confidence": 0.8
+          }
+        },
+        {
+          "meta": {
+            "tattoo_id": "41c395950109",
+            "task_id": "math-01_cm_extractor_t0",
+            "loop_index": 4,
+            "parent_id": "b4fe1a9ef932",
+            "created_at": 1778027534.2256947
+          },
+          "goal": {
+            "objective": "주어진 수학 문제를 단계적으로 풀어라.\n\nProblem:\n## Pre-extracted structure (from Extractor agent):\n```json\n{\n  \"claims\": [\n    {\"text\": \"Apples cost $2 each.\", \"type\": \"fact\"},\n    {\"text\": \"Oranges cost $3 each.\", \"type\": \"fact\"},\n    {\"text\": \"The customer spends $47.\", \"type\": \"fact\"},\n    {\"text\": \"The customer buys more apples than oranges.\", \"type\": \"constraint\"},\n    {\"text\": \"The total number of fruits is 20.\", \"type\": \"fact\"}\n  ],\n  \"entities\": [\n    {\"name\": \"apples\", \"role\": \"object\"},\n    {\"name\": \"oranges\", \"role\": \"object\"},\n    {\"name\": \"$2\", \"role\": \"quantity\"},\n    {\"name\": \"$3\", \"role\": \"quantity\"},\n    {\"name\": \"$47\", \"role\": \"quantity\"},\n    {\"name\": \"20\", \"role\": \"quantity\"}\n  ]\n}\n```\n\n## Original task prompt:\nA store sells apples at $2 each and oranges at $3 each. A customer buys some apples and oranges, spending exactly $47. The customer buys more apples than oranges. The total number of fruits is 20. How many apples and how many oranges did the customer buy?",
+            "constraints": [
+              "정확한 숫자를 구해야 한다",
+              "검산을 해야 한다"
+            ],
+            "termination": "모든 비판이 수렴하고 최종 답변이 확정되면 종료"
+          },
+          "state": {
+            "phase": "INVESTIGATE",
+            "assertions": [
+              {
+                "id": "8f770a26",
+                "content": "Apples cost $2 each.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "09389f5a",
+                "content": "Oranges cost $3 each.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "0d543723",
+                "content": "The customer spends $47.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "34c4b739",
+                "content": "The customer buys more apples than oranges.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "45f1e339",
+                "content": "The total number of fruits is 20.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "c798e4ef",
+                "content": "The customer buys 13 apples.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "41c79c60",
+                "content": "The customer buys 7 oranges.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              }
+            ],
+            "open_questions": [
+              "What method can be used to solve the system of equations?",
+              "Are the solutions integers?"
+            ],
+            "next_directive": "",
+            "critique_log": [
+              {
+                "cycle": 4,
+                "phase": "INVESTIGATE",
+                "judgments": [
+                  {
+                    "assertion_id": "8f770a26",
+                    "status": "valid",
+                    "reason": "This is a given fact and is confirmed by the blueprint."
+                  },
+                  {
+                    "assertion_id": "09389f5a",
+                    "status": "valid",
+                    "reason": "This is a given fact and is confirmed by the blueprint."
+                  },
+                  {
+                    "assertion_id": "0d543723",
+                    "status": "valid",
+                    "reason": "This is a given fact and is confirmed by the blueprint."
+                  },
+                  {
+                    "assertion_id": "34c4b739",
+                    "status": "valid",
+                    "reason": "This is a given constraint and is confirmed by the blueprint."
+                  },
+                  {
+                    "assertion_id": "45f1e339",
+                    "status": "valid",
+                    "reason": "This is a given fact and is confirmed by the blueprint."
+                  },
+                  {
+                    "assertion_id": "c798e4ef",
+                    "status": "valid",
+                    "reason": "This assertion aligns with the solution (13 apples) and satisfies the constraints."
+                  },
+                  {
+                    "assertion_id": "41c79c60",
+                    "status": "valid",
+                    "reason": "This assertion aligns with the solution (7 oranges) and satisfies the constraints."
+                  }
+                ]
+              }
+            ]
+          },
+          "handoff": {
+            "a2b": {
+              "blueprint": "The solution involves setting up a system of two linear equations with two variables (apples and oranges) based on the given constraints. Solving this system yields a=13 and o=7.  Verification confirms that these values satisfy all given conditions.",
+              "constraints": [
+                "The solution must be verifiable.",
+                "The solution must satisfy all given constraints."
+              ],
+              "prioritized_focus": "Confirming the integer nature of the solution and verifying all constraints.",
+              "open_questions": [
+                "Are the solutions integers?",
+                "Does the solution satisfy all constraints?"
+              ]
+            }
+          },
+          "integrity": {
+            "assertion_hash": "2cbc4e983e210280",
+            "chain_hash": "4d3cfd08190dfb4b",
+            "confidence": 0.95
+          }
+        },
+        {
+          "meta": {
+            "tattoo_id": "12d40f037fff",
+            "task_id": "math-01_cm_extractor_t0",
+            "loop_index": 5,
+            "parent_id": "41c395950109",
+            "created_at": 1778027542.6204102
+          },
+          "goal": {
+            "objective": "주어진 수학 문제를 단계적으로 풀어라.\n\nProblem:\n## Pre-extracted structure (from Extractor agent):\n```json\n{\n  \"claims\": [\n    {\"text\": \"Apples cost $2 each.\", \"type\": \"fact\"},\n    {\"text\": \"Oranges cost $3 each.\", \"type\": \"fact\"},\n    {\"text\": \"The customer spends $47.\", \"type\": \"fact\"},\n    {\"text\": \"The customer buys more apples than oranges.\", \"type\": \"constraint\"},\n    {\"text\": \"The total number of fruits is 20.\", \"type\": \"fact\"}\n  ],\n  \"entities\": [\n    {\"name\": \"apples\", \"role\": \"object\"},\n    {\"name\": \"oranges\", \"role\": \"object\"},\n    {\"name\": \"$2\", \"role\": \"quantity\"},\n    {\"name\": \"$3\", \"role\": \"quantity\"},\n    {\"name\": \"$47\", \"role\": \"quantity\"},\n    {\"name\": \"20\", \"role\": \"quantity\"}\n  ]\n}\n```\n\n## Original task prompt:\nA store sells apples at $2 each and oranges at $3 each. A customer buys some apples and oranges, spending exactly $47. The customer buys more apples than oranges. The total number of fruits is 20. How many apples and how many oranges did the customer buy?",
+            "constraints": [
+              "정확한 숫자를 구해야 한다",
+              "검산을 해야 한다"
+            ],
+            "termination": "모든 비판이 수렴하고 최종 답변이 확정되면 종료"
+          },
+          "state": {
+            "phase": "INVESTIGATE",
+            "assertions": [
+              {
+                "id": "8f770a26",
+                "content": "Apples cost $2 each.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "09389f5a",
+                "content": "Oranges cost $3 each.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "0d543723",
+                "content": "The customer spends $47.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "34c4b739",
+                "content": "The customer buys more apples than oranges.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "45f1e339",
+                "content": "The total number of fruits is 20.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "c798e4ef",
+                "content": "The customer buys 13 apples.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "41c79c60",
+                "content": "The customer buys 7 oranges.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "5e96c0a6",
+                "content": "The customer buys 13 apples.",
+                "source_loop": 5,
+                "confidence": 0.99,
+                "status": "active",
+                "evidence_ref": {
+                  "chunk_id": "5"
+                }
+              },
+              {
+                "id": "5bd3859a",
+                "content": "The customer buys 7 oranges.",
+                "source_loop": 5,
+                "confidence": 0.99,
+                "status": "active",
+                "evidence_ref": {
+                  "chunk_id": "5"
+                }
+              }
+            ],
+            "open_questions": [
+              "What method can be used to solve the system of equations?",
+              "Are the solutions integers?"
+            ],
+            "next_directive": "",
+            "critique_log": [
+              {
+                "cycle": 5,
+                "phase": "INVESTIGATE",
+                "judgments": [
+                  {
+                    "assertion_id": "8f770a26",
+                    "status": "valid",
+                    "reason": "The assertion 'Apples cost $2 each' is a given fact and is confirmed by the blueprint."
+                  },
+                  {
+                    "assertion_id": "09389f5a",
+                    "status": "valid",
+                    "reason": "The assertion 'Oranges cost $3 each' is a given fact and is confirmed by the blueprint."
+                  },
+                  {
+                    "assertion_id": "0d543723",
+                    "status": "valid",
+                    "reason": "The assertion 'The customer spends $47' is a given fact and is confirmed by the blueprint."
+                  },
+                  {
+                    "assertion_id": "34c4b739",
+                    "status": "valid",
+                    "reason": "The assertion 'The customer buys more apples than oranges' is a given constraint and is confirmed by the blueprint."
+                  },
+                  {
+                    "assertion_id": "45f1e339",
+                    "status": "valid",
+                    "reason": "The assertion 'The total number of fruits is 20' is a given fact and is confirmed by the blueprint."
+                  },
+                  {
+                    "assertion_id": "c798e4ef",
+                    "status": "valid",
+                    "reason": "The assertion 'The customer buys 13 apples' is consistent with the blueprint's solution and the constraints."
+                  },
+                  {
+                    "assertion_id": "41c79c60",
+                    "status": "valid",
+                    "reason": "The assertion 'The customer buys 7 oranges' is consistent with the blueprint's solution and the constraints."
+                  },
+                  {
+                    "assertion_id": "5e96c0a6",
+                    "status": "valid",
+                    "reason": "The assertion 'The customer buys 13 apples' is repeated and confirmed with higher confidence."
+                  },
+                  {
+                    "assertion_id": "5bd3859a",
+                    "status": "valid",
+                    "reason": "The assertion 'The customer buys 7 oranges' is repeated and confirmed with higher confidence."
+                  }
+                ]
+              }
+            ]
+          },
+          "handoff": {
+            "a2b": {
+              "blueprint": "The problem can be solved using a system of two linear equations.  Given: Apples cost $2 each, Oranges cost $3 each, Total spent $47, Total fruits 20, Apples > Oranges.  Solution: 13 apples and 7 oranges.",
+              "constraints": [
+                "The number of apples and oranges must be integers.",
+                "The total cost must be $47.",
+                "The total number of fruits must be 20.",
+                "The number of apples must be greater than the number of oranges."
+              ],
+              "prioritized_focus": "Confirming the integer solution and adding it as a fact with high confidence.",
+              "open_questions": [
+                "Are the solutions integers?",
+                "Is the solution consistent with all given constraints?"
+              ]
+            },
+            "b2c": {
+              "implementation_summary": "The solution was derived by setting up a system of two linear equations: 2a + 3o = 47 and a + o = 20. Solving this system yields a = 13 and o = 7.  The solution satisfies all given constraints.",
+              "deviations": [],
+              "self_test_results": "The solution (13 apples, 7 oranges) meets all criteria: cost ($2*13 + $3*7 = $26 + $21 = $47), apple count > orange count (13 > 7), and total fruit count (13 + 7 = 20).  Integer values are confirmed."
+            }
+          },
+          "integrity": {
+            "assertion_hash": "68663164edbad525",
+            "chain_hash": "3d686ab152a4420b",
+            "confidence": 0.99
+          }
+        },
+        {
+          "meta": {
+            "tattoo_id": "7f1b10e6d9f4",
+            "task_id": "math-01_cm_extractor_t0",
+            "loop_index": 6,
+            "parent_id": "12d40f037fff",
+            "created_at": 1778027550.2637937
+          },
+          "goal": {
+            "objective": "주어진 수학 문제를 단계적으로 풀어라.\n\nProblem:\n## Pre-extracted structure (from Extractor agent):\n```json\n{\n  \"claims\": [\n    {\"text\": \"Apples cost $2 each.\", \"type\": \"fact\"},\n    {\"text\": \"Oranges cost $3 each.\", \"type\": \"fact\"},\n    {\"text\": \"The customer spends $47.\", \"type\": \"fact\"},\n    {\"text\": \"The customer buys more apples than oranges.\", \"type\": \"constraint\"},\n    {\"text\": \"The total number of fruits is 20.\", \"type\": \"fact\"}\n  ],\n  \"entities\": [\n    {\"name\": \"apples\", \"role\": \"object\"},\n    {\"name\": \"oranges\", \"role\": \"object\"},\n    {\"name\": \"$2\", \"role\": \"quantity\"},\n    {\"name\": \"$3\", \"role\": \"quantity\"},\n    {\"name\": \"$47\", \"role\": \"quantity\"},\n    {\"name\": \"20\", \"role\": \"quantity\"}\n  ]\n}\n```\n\n## Original task prompt:\nA store sells apples at $2 each and oranges at $3 each. A customer buys some apples and oranges, spending exactly $47. The customer buys more apples than oranges. The total number of fruits is 20. How many apples and how many oranges did the customer buy?",
+            "constraints": [
+              "정확한 숫자를 구해야 한다",
+              "검산을 해야 한다"
+            ],
+            "termination": "모든 비판이 수렴하고 최종 답변이 확정되면 종료"
+          },
+          "state": {
+            "phase": "INVESTIGATE",
+            "assertions": [
+              {
+                "id": "8f770a26",
+                "content": "Apples cost $2 each.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "09389f5a",
+                "content": "Oranges cost $3 each.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "0d543723",
+                "content": "The customer spends $47.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "34c4b739",
+                "content": "The customer buys more apples than oranges.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "45f1e339",
+                "content": "The total number of fruits is 20.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "c798e4ef",
+                "content": "The customer buys 13 apples.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "41c79c60",
+                "content": "The customer buys 7 oranges.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "5e96c0a6",
+                "content": "The customer buys 13 apples.",
+                "source_loop": 5,
+                "confidence": 0.99,
+                "status": "active",
+                "evidence_ref": {
+                  "chunk_id": "5"
+                }
+              },
+              {
+                "id": "5bd3859a",
+                "content": "The customer buys 7 oranges.",
+                "source_loop": 5,
+                "confidence": 0.99,
+                "status": "active",
+                "evidence_ref": {
+                  "chunk_id": "5"
+                }
+              }
+            ],
+            "open_questions": [
+              "What method can be used to solve the system of equations?",
+              "Are the solutions integers?"
+            ],
+            "next_directive": "",
+            "critique_log": [
+              {
+                "cycle": 6,
+                "phase": "INVESTIGATE",
+                "judgments": [
+                  {
+                    "assertion_id": "8f770a26",
+                    "status": "valid",
+                    "reason": "This assertion is a given fact and is confirmed by the problem statement."
+                  },
+                  {
+                    "assertion_id": "09389f5a",
+                    "status": "valid",
+                    "reason": "This assertion is a given fact and is confirmed by the problem statement."
+                  },
+                  {
+                    "assertion_id": "0d543723",
+                    "status": "valid",
+                    "reason": "This assertion is a given fact and is confirmed by the problem statement."
+                  },
+                  {
+                    "assertion_id": "34c4b739",
+                    "status": "valid",
+                    "reason": "This assertion is a given constraint and is confirmed by the problem statement."
+                  },
+                  {
+                    "assertion_id": "45f1e339",
+                    "status": "valid",
+                    "reason": "This assertion is a given fact and is confirmed by the problem statement."
+                  },
+                  {
+                    "assertion_id": "c798e4ef",
+                    "status": "suspect",
+                    "reason": "The assertion 'The customer buys 13 apples.' and 'The customer buys 7 oranges.' are presented in two separate assertions with the same content. This suggests a potential inconsistency or error.  Let's verify if these numbers satisfy the constraints."
+                  },
+                  {
+                    "assertion_id": "41c79c60",
+                    "status": "suspect",
+                    "reason": "The assertion 'The customer buys 7 oranges.' is redundant with assertion c798e4ef."
+                  },
+                  {
+                    "assertion_id": "5e96c0a6",
+                    "status": "valid",
+                    "reason": "This assertion confirms the previous assertion about the number of apples."
+                  },
+                  {
+                    "assertion_id": "5bd3859a",
+                    "status": "valid",
+                    "reason": "This assertion confirms the previous assertion about the number of oranges."
+                  }
+                ]
+              }
+            ]
+          },
+          "handoff": {
+            "a2b": {
+              "blueprint": "1. Set up a system of linear equations based on the given information: cost of apples, cost of oranges, total spending, and total number of fruits. 2. Solve the system of equations. 3. Verify that the number of apples and oranges are integers. 4. Confirm that the customer buys more apples than oranges.",
+              "constraints": [
+                "The solution must satisfy all given constraints.",
+                "The number of apples and oranges must be integers.",
+                "The total cost must be $47.",
+                "The total number of fruits must be 20.",
+                "The number of apples must be greater than the number of oranges."
+              ],
+              "prioritized_focus": "Solving the system of equations and verifying integer solutions.",
+              "open_questions": [
+                "What method can be used to solve the system of equations?",
+                "Are the solutions integers?"
+              ]
+            },
+            "b2c": {
+              "implementation_summary": "The solution is based on setting up two equations: 2*apples + 3*oranges = 47 and apples + oranges = 20. Solving this system yields apples = 13 and oranges = 7.  Both solutions satisfy the constraints (apples > oranges, total cost = 47, total fruits = 20).",
+              "deviations": [],
+              "self_test_results": "The solution (13 apples, 7 oranges) satisfies all constraints: cost ($2*13 + $3*7 = $26 + $21 = $47), number of fruits (13 + 7 = 20), and the apple/orange ratio (13 > 7). The integer constraint is also met."
+            }
+          },
+          "integrity": {
+            "assertion_hash": "68663164edbad525",
+            "chain_hash": "fdd5b2192d0afc84",
+            "confidence": 0.7
+          }
+        },
+        {
+          "meta": {
+            "tattoo_id": "413b9223bdeb",
+            "task_id": "math-01_cm_extractor_t0",
+            "loop_index": 7,
+            "parent_id": "7f1b10e6d9f4",
+            "created_at": 1778027560.3384821
+          },
+          "goal": {
+            "objective": "주어진 수학 문제를 단계적으로 풀어라.\n\nProblem:\n## Pre-extracted structure (from Extractor agent):\n```json\n{\n  \"claims\": [\n    {\"text\": \"Apples cost $2 each.\", \"type\": \"fact\"},\n    {\"text\": \"Oranges cost $3 each.\", \"type\": \"fact\"},\n    {\"text\": \"The customer spends $47.\", \"type\": \"fact\"},\n    {\"text\": \"The customer buys more apples than oranges.\", \"type\": \"constraint\"},\n    {\"text\": \"The total number of fruits is 20.\", \"type\": \"fact\"}\n  ],\n  \"entities\": [\n    {\"name\": \"apples\", \"role\": \"object\"},\n    {\"name\": \"oranges\", \"role\": \"object\"},\n    {\"name\": \"$2\", \"role\": \"quantity\"},\n    {\"name\": \"$3\", \"role\": \"quantity\"},\n    {\"name\": \"$47\", \"role\": \"quantity\"},\n    {\"name\": \"20\", \"role\": \"quantity\"}\n  ]\n}\n```\n\n## Original task prompt:\nA store sells apples at $2 each and oranges at $3 each. A customer buys some apples and oranges, spending exactly $47. The customer buys more apples than oranges. The total number of fruits is 20. How many apples and how many oranges did the customer buy?",
+            "constraints": [
+              "정확한 숫자를 구해야 한다",
+              "검산을 해야 한다"
+            ],
+            "termination": "모든 비판이 수렴하고 최종 답변이 확정되면 종료"
+          },
+          "state": {
+            "phase": "CONVERGED",
+            "assertions": [
+              {
+                "id": "8f770a26",
+                "content": "Apples cost $2 each.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "09389f5a",
+                "content": "Oranges cost $3 each.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "0d543723",
+                "content": "The customer spends $47.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "34c4b739",
+                "content": "The customer buys more apples than oranges.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "45f1e339",
+                "content": "The total number of fruits is 20.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "c798e4ef",
+                "content": "The customer buys 13 apples.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "41c79c60",
+                "content": "The customer buys 7 oranges.",
+                "source_loop": 4,
+                "confidence": 0.9,
+                "status": "active"
+              },
+              {
+                "id": "5e96c0a6",
+                "content": "The customer buys 13 apples.",
+                "source_loop": 5,
+                "confidence": 0.99,
+                "status": "active",
+                "evidence_ref": {
+                  "chunk_id": "5"
+                }
+              },
+              {
+                "id": "5bd3859a",
+                "content": "The customer buys 7 oranges.",
+                "source_loop": 5,
+                "confidence": 0.99,
+                "status": "active",
+                "evidence_ref": {
+                  "chunk_id": "5"
+                }
+              }
+            ],
+            "open_questions": [
+              "What method can be used to solve the system of equations?",
+              "Are the solutions integers?"
+            ],
+            "next_directive": "The customer bought 13 apples and 7 oranges.",
+            "critique_log": [
+              {
+                "cycle": 7,
+                "phase": "SYNTHESIZE",
+                "judgments": [
+                  {
+                    "assertion_id": "8f770a26",
+                    "status": "valid",
+                    "reason": "The assertion 'Apples cost $2 each' is a given fact in the problem statement."
+                  },
+                  {
+                    "assertion_id": "09389f5a",
+                    "status": "valid",
+                    "reason": "The assertion 'Oranges cost $3 each' is a given fact in the problem statement."
+                  },
+                  {
+                    "assertion_id": "0d543723",
+                    "status": "valid",
+                    "reason": "The assertion 'The customer spends $47' is a given fact in the problem statement."
+                  },
+                  {
+                    "assertion_id": "34c4b739",
+                    "status": "valid",
+                    "reason": "The assertion 'The customer buys more apples than oranges' is a given constraint."
+                  },
+                  {
+                    "assertion_id": "45f1e339",
+                    "status": "valid",
+                    "reason": "The assertion 'The total number of fruits is 20' is a given fact in the problem statement."
+                  },
+                  {
+                    "assertion_id": "c798e4ef",
+                    "status": "valid",
+                    "reason": "The assertion 'The customer buys 13 apples' is consistent with the solution derived from the blueprint."
+                  },
+                  {
+                    "assertion_id": "41c79c60",
+                    "status": "valid",
+                    "reason": "The assertion 'The customer buys 7 oranges' is consistent with the solution derived from the blueprint."
+                  },
+                  {
+                    "assertion_id": "5e96c0a6",
+                    "status": "valid",
+                    "reason": "The assertion 'The customer buys 13 apples' is consistent with the solution derived from the blueprint and the previous assertion."
+                  },
+                  {
+                    "assertion_id": "5bd3859a",
+                    "status": "valid",
+                    "reason": "The assertion 'The customer buys 7 oranges' is consistent with the solution derived from the blueprint and the previous assertion."
+                  }
+                ]
+              }
+            ]
+          },
+          "handoff": {
+            "a2b": {
+              "blueprint": "The solution involves determining the number of apples and oranges purchased. We are given the cost per apple ($2), the cost per orange ($3), the total amount spent ($47), the number of apples is greater than the number of oranges, and the total number of fruits is 20. Let x be the number of apples and y be the number of oranges. We can set up the following equations: 2x + 3y = 47 and x + y = 20. Solving this system of equations, we can express x in terms of y: x = 20 - y. Substituting this into the first equation: 2(20 - y) + 3y = 47, which simplifies to 40 - 2y + 3y = 47, so y = 7. Then x = 20 - 7 = 13. Therefore, the customer bought 13 apples and 7 oranges.",
+              "constraints": [
+                "Verify that 13 apples and 7 oranges satisfy all given conditions.",
+                "Ensure the solution is an integer."
+              ],
+              "prioritized_focus": "Finalize the answer and set `final_answer`.",
+              "open_questions": [
+                "Are the solutions integers?",
+                "Does the solution satisfy all constraints?"
+              ]
+            },
+            "b2c": {
+              "implementation_summary": "I reviewed the assertions and identified a potential inconsistency. Assertions c798e4ef and 41c79c60 state the customer buys 13 apples and 7 oranges, respectively.  I've flagged these as suspect because they are repeated.  I will proceed to verify if these numbers satisfy the constraints to confirm the solution.",
+              "deviations": [
+                {
+                  "original": "Assertions c798e4ef and 41c79c60 are redundant.",
+                  "actual": "Assertions c798e4ef and 41c79c60 are flagged as suspect due to redundancy.",
+                  "reason": "Redundancy can indicate an error or inconsistency in the data."
+                }
+              ],
+              "self_test_results": "I have reviewed the assertions and identified a potential issue with redundancy. I will now verify the solution using the given constraints to confirm the correctness of the solution."
+            },
+            "reject_memo": {
+              "target_phase": "B",
+              "failed_assertions": [
+                "Assertions c798e4ef and 41c79c60 are redundant and require verification against the constraints."
+              ],
+              "remediation_hint": "Confirm that the solution (13 apples, 7 oranges) indeed satisfies all constraints: total cost ($47), total fruits (20), and the apple/orange ratio (more apples than oranges)."
+            }
+          },
+          "integrity": {
+            "assertion_hash": "68663164edbad525",
+            "chain_hash": "58baf5b4d2ec080a",
+            "confidence": 1.0
+          }
+        }
+      ]
+    }
+  ]
+}

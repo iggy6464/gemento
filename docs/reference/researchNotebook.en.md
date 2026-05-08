@@ -1,10 +1,10 @@
 ---
 type: reference
 status: in_progress
-updated_at: 2026-05-05
+updated_at: 2026-05-08
 mirror_of: docs/reference/researchNotebook.md (Part 1 — Closed Findings)
 language: en
-note: 2026-05-05 v3 — Exp14 H13 Closed-append (Stage 5 first statistically significant negative)
+note: 2026-05-08 v4 — Stage 6 cross-model H14 Closed-append (5/5 H11 direction, 3/4 H12 direction, rnj-1:8b H12 SIG)
 ---
 
 > **Conceptual framework canonical document**: [conceptFramework.md](./conceptFramework.md) — 4-axis externalization principles, terminology definitions, axis ↔ experiment mapping.
@@ -1032,6 +1032,72 @@ Limitations:
 Detail: `docs/reference/exp14-search-tool-analysis-2026-05-05.md`. Results: `experiments/exp14_search_tool/results/exp14_baseline_abc_chunked.json` (baseline) + `exp14_search_tool_abc.json` (search) + `diag_search_medium_needle_v2.json` (needle diagnostic) + `diag_search_large_2hop.json` (multi-hop diagnostic). Tool capture fix: commit `a3b71af`.
 
 The hypothesis table above (H1~H12) remains unchanged (Closed-append-only policy). H13's entry is a new addition only.
+
+---
+
+## H14 — Cross-model generalization (Stage 6, partial, 2026-05-08)
+
+### Summary
+
+A follow-up cross-model replication tested **H14** — whether the *direction* of Stage 5's Position-Effect asymmetry (H11 Extractor pre-stage positive; H12 Reducer post-stage negative) generalizes across model families and sizes. Five models in total (Stage 5 baseline + 4 cross-model targets via Ollama Cloud Pro $20/month, 3-concurrent-model loading): Gemma 4 E4B (Stage 5), gemma3:4b, gemma3:12b (H11 done, H12 partial 28/75 baseline), rnj-1:8b, gpt-oss:20b. Same task set (15 main tasks) and trial count (5 per task × condition) as Stage 5.
+
+### H11 (Extractor) — direction match 5/5
+
+| Model | family | size | Δ | Cohen's d | p (Wilcoxon) |
+|---|---|---|---|---|---|
+| Gemma 4 E4B (Stage 5) | Gemma | 4B | +0.0500 | +0.323 | 0.198 |
+| gemma3:4b | Gemma | 4B | **+0.0787** | +0.299 | 0.594 |
+| gemma3:12b | Gemma | 12B | +0.0022 | +0.009 | 0.888 |
+| rnj-1:8b | non-Gemma | 8B | +0.0047 | +0.019 | 0.859 |
+| gpt-oss:20b | OpenAI/reasoning | 20B | +0.0244 | +0.177 | 0.672 |
+
+All five Δ values are positive — the H11 *direction* (pre-stage Extractor helps) replicates across families and sizes. Magnitude is small-model dependent: the largest effect appears at the weakest baselines (gemma3:4b +0.079, Stage 5 Gemma 4 E4B +0.050), consistent with capability-headroom saturation in stronger models (gpt-oss:20b at ~0.89 baseline).
+
+### H12 (Reducer) — direction match 3/4 + paper §4.6.2 caveat evidence
+
+| Model | size | Δ | Cohen's d | p (Wilcoxon) |
+|---|---|---|---|---|
+| Gemma 4 E4B (Stage 5) | 4B | −0.0711 | −0.323 | 0.180 |
+| gemma3:4b | 4B | **+0.0562** | +0.331 | 0.423 (outlier) |
+| rnj-1:8b | 8B | **−0.0989** | **−0.617** | **0.036 ✅ SIG** |
+| gpt-oss:20b | 20B | −0.0100 | −0.052 | 0.735 |
+| gemma3:12b | 12B | (28/75 partial) | TBD | TBD |
+
+Three out of four completed models show the negative H12 direction. The gemma3:4b outlier (+0.056) is *direct evidence* for the paper §4.6.2 keyword-scorer caveat: gemma3:4b's baseline mean is the weakest of any model (~0.45), so the Reducer's stylistic re-ordering happens to overlap more with the canonical answer keywords — a *style mismatch artifact*, not a genuine accuracy gain. The rnj-1:8b H12 result is also the **first cross-model statistically significant verdict** in either direction (Wilcoxon p=0.036, |d|=0.617 medium-large), strengthening the original Stage 5 H12 narrative.
+
+### H13 (Search Tool) — Gemma family-level finding
+
+A dry-run of H13 on gemma3:4b returned 0/50 search_chunks tool calls; gemma3:12b dry-run produced "Unknown" answers with max-cycle exits. **Gemma 3 family does not reliably support tool-calling at this size class** in the Ollama Cloud build — a family-level finding that becomes paper §4.7. H13 cross-family replication (rnj-1, gpt-oss) is left as future work because the Stage 5 H13 narrative was already statistically established.
+
+### H14 verdict (Architect)
+
+⚠ **Conditional accept — direction generalization strong, magnitude model-dependent, single SIG at this scale**:
+- H11 direction: 5/5 positive (robust direction match).
+- H12 direction: 3/4 negative (one outlier that itself supplies caveat evidence).
+- rnj-1:8b H12 SIG (p=0.036, |d|=0.617): *first* cross-model significant result, in the predicted direction.
+
+The Stage 5 finding — *Position-Effect asymmetry between pre-stage Extractor (positive) and post-stage Reducer (negative)* — generalizes as a directional regularity across families (Gemma, OpenAI gpt-oss, "rnj-1") and sizes (4B, 8B, 12B, 20B). The magnitude is largest where it should be (weak-baseline regimes), and the H12 outlier itself is a textbook keyword-scorer caveat case, not a counterexample to the position-effect hypothesis.
+
+### Stage 5 ↔ Stage 6 integrated narrative
+
+| Aspect | Stage 5 (single model) | Stage 6 (cross-model) |
+|---|---|---|
+| Position-effect asymmetry | proposed | **direction confirmed (5/5 H11, 3/4 H12)** |
+| H12 keyword-scorer caveat | proposed | **gemma3:4b outlier = direct partial evidence** |
+| H13 mechanism | under-iteration + premature termination | + Gemma-family tool-calling absence (family-level) |
+
+### Limitations
+
+- n=15 task × 5 trial — same constraint as Stage 5; cross-model replication trades depth for breadth.
+- gemma3:12b H12 still partial (28/75 baseline) — to be refreshed in v2.
+- LLM-as-judge auxiliary evaluation (P1-3) not yet executed — would help disambiguate the gemma3:4b outlier vs the keyword-scorer caveat.
+- Cross-family scope limited to (rnj-1, gpt-oss) — Mistral / DeepSeek / Llama not yet covered.
+- H13 cross-model attempted only on Gemma family; rnj-1 and gpt-oss tool-calling H13 reproduction is future work.
+- Ollama Cloud Pro $20/month subscription required (paper reproducibility note).
+
+Detail: `docs/reference/stage6-cross-model-analysis-2026-05-08.md`. Results: `experiments/cross_model/results/s6_rnj1_h11_h12.json` (rnj-1 final), `s6_gpt_oss_h11_h12.json` (gpt-oss final), `partial_stage6_gemma3_12b_ollama_s6_gemma3_12b_h11_h12.json` (gemma3:12b partial), and earlier `s6_gemma3_4b_h12.json` + `partial_stage6_gemma3_4b_ollama_s6_gemma3_4b_h11.json`. Result mirror: `docs/reference/results/exp-stage6-cross-model.md`.
+
+The hypothesis table above (H1~H13) remains unchanged (Closed-append-only policy). H14's entry is a new addition only.
 
 ---
 

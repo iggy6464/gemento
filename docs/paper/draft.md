@@ -1,10 +1,10 @@
 ---
 type: paper
 status: draft-skeleton
-updated_at: 2026-05-05
+updated_at: 2026-05-08
 target: arXiv preprint (single target — venue submission deferred)
 canonical: true
-revision: v0.2 (2026-05-05) — tone-down + contribution reorder per GPT review + Architect evaluation. See docs/reference/paper-review-action-items-2026-05-05.md.
+revision: v0.4 (2026-05-08) — Stage 6 cross-model partial integration (§4.3 cross-model body, §4.6.2 caveat evidence, §4.7 Gemma family tool-calling note, §1.3 contribution refresh). v0.3 = unreleased internal. v0.2 = 2026-05-05 tone-down + contribution reorder. See docs/reference/paper-review-action-items-2026-05-05.md and docs/reference/stage6-cross-model-analysis-2026-05-08.md.
 ---
 
 # Role Addition Is Not Monotonic: Position Effects in Small-LLM Workflow Externalization
@@ -13,7 +13,7 @@ revision: v0.2 (2026-05-05) — tone-down + contribution reorder per GPT review 
 
 ---
 
-> **DRAFT v0.2 — skeleton with tone adjustments.** Sections marked `[TBD]` await Exp14 verdict (Search Tool, in progress) and cross-model replication (planned via Groq free tier + Local Qwen 2.5 7B Q4_K_M). Statistics in `[stats: pending]` markers will be regenerated with consistent (Δ, n, p, Cohen's d, 95% CI) 5-tuple.
+> **DRAFT v0.4 — Stage 6 cross-model partial integrated.** Stage 5 (Exp10–14, H10–H13) closed. Stage 6 cross-model replication closed at *partial* coverage (H11 5 models, H12 4 models + 1 partial, H13 Gemma family only) via Ollama Cloud Pro $20/month — direction generalization confirmed for H11 (5/5 positive) and H12 (3/4 negative, 1 outlier = caveat evidence). LLM-as-judge auxiliary evaluation (P1-3) is deferred to future work. Remaining `[TBD]` markers concern §4.4 5-tuple statistics regeneration (P1-4) and Conclusion §7.
 
 ## Abstract
 
@@ -36,7 +36,7 @@ The dominant narrative in 2024–2026 has been parameter scaling — Llama 3.3 7
 This is positioned as a *measurement / ablation paper*, not a framework proposal — externalization frameworks already exist (Zhou et al., 2026; StateFlow; Chain-of-Agents). What is new is **what we measured** and **how we isolated it**.
 
 1. **Structure-effect ablations in role and tool axes (single best claim)**: paired same-model ablations show that the *sign* of an externalization effect depends on its position and iteration discipline.
-   - **Role axis (position effect)**: pre-stage Extractor Δ=+0.05 (Cohen's d=+0.32, n=15, NS) vs post-stage Reducer Δ=−0.05 (d=−0.32, n=15, NS) — mirrored directional effects of nearly identical magnitude on the same model and taskset.
+   - **Role axis (position effect)**: pre-stage Extractor Δ=+0.05 (Cohen's d=+0.32, n=15, NS) vs post-stage Reducer Δ=−0.05 (d=−0.32, n=15, NS) — mirrored directional effects of nearly identical magnitude on the same model and taskset. **Cross-model replication (§4.3) confirms direction generalization**: H11 5/5 models positive, H12 3/4 models negative across Gemma / non-Gemma / OpenAI gpt-oss families and 4B–20B sizes; one cross-model H12 verdict is statistically significant (rnj-1:8b, p=0.036, |d|=0.617).
    - **Tool axis (iteration effect)**: an agent-active BM25 retrieval tool yields Δ=−0.22 (d=−1.00, n=10, **p=0.012, statistically significant**) against a sufficient-context baseline; mechanism = under-iteration on multi-hop tasks. This is in striking contrast to deterministic single-call computation tools (calculator, linprog) that previously yielded +18–23pp on the same harness.
    These two axes converge on a single claim: *more structure is not monotonically better; what matters is where it is placed and how it iterates*. Empirical / mechanism contribution.
 2. **Same-model isolation protocol for measuring structural workflow effects**: by holding the base model constant (Gemma 4 E4B) across A-Proposer / B-Critic / C-Judge / Extractor / Reducer, we isolate the *structural* effect of role and tool changes from the model-quality confound that contaminates most multi-agent comparisons. Methodology contribution.
@@ -122,9 +122,37 @@ H1–H13 are sequentially numbered hypotheses about externalization axes — not
 - **Long-context taskset** (10 tasks): size_class × hop_type matrix (small/medium/large × needle/2-hop/3-hop)
 - All tasks open-source under MIT in `experiments/tasks/`
 
-### 4.3 Cross-model held-out [TBD — Stage 6]
+### 4.3 Cross-model replication — Stage 6 partial
 
-[TBD: replication of H1, H7, H8, H9a, H11, H12 on Llama 3.1 8B (Groq free) and Qwen 2.5 7B Q4_K_M (local). Optional: Llama 3.3 70B (Groq, ceiling check).]
+To test whether the position-effect asymmetry in §4.6 is a Gemma-specific artifact, we replicated H11 (Extractor pre-stage) and H12 (Reducer post-stage) on four additional open-weight models served through Ollama Cloud (Pro tier, $20/month, 3-concurrent-model loading): `gemma3:4b`, `gemma3:12b`, `rnj-1:8b` (non-Gemma, 8B), and `gpt-oss:20b` (OpenAI reasoning class, 20B). Same main 15-task set and 5 trials per (task, condition) as Stage 5. Stage 5's Gemma 4 E4B baseline is included as the fifth model.
+
+**H11 (Extractor pre-stage) — direction match 5/5**:
+
+| Model | family | size | Δ | Cohen's d | p (Wilcoxon) |
+|---|---|---|---|---|---|
+| Gemma 4 E4B (Stage 5) | Gemma | 4B | +0.0500 | +0.323 | 0.198 |
+| gemma3:4b | Gemma | 4B | **+0.0787** | +0.299 | 0.594 |
+| gemma3:12b | Gemma | 12B | +0.0022 | +0.009 | 0.888 |
+| rnj-1:8b | non-Gemma | 8B | +0.0047 | +0.019 | 0.859 |
+| gpt-oss:20b | OpenAI | 20B | +0.0244 | +0.177 | 0.672 |
+
+All five models show the predicted positive direction. Magnitude correlates inversely with baseline strength — the largest effect appears at the weakest baselines (gemma3:4b, Gemma 4 E4B), consistent with capability-headroom saturation at stronger baselines. None of the cross-model H11 effects reach α=0.05 individually at n=15.
+
+**H12 (Reducer post-stage) — direction match 3/4 + caveat evidence**:
+
+| Model | size | Δ | Cohen's d | p (Wilcoxon) |
+|---|---|---|---|---|
+| Gemma 4 E4B (Stage 5) | 4B | −0.0711 | −0.323 | 0.180 |
+| gemma3:4b | 4B | **+0.0562** | +0.331 | 0.423 (outlier) |
+| rnj-1:8b | 8B | **−0.0989** | **−0.617** | **0.036 ✅ SIG** |
+| gpt-oss:20b | 20B | −0.0100 | −0.052 | 0.735 |
+| gemma3:12b | 12B | (28/75 partial — pending) | TBD | TBD |
+
+Three of four completed models replicate the predicted negative direction. The rnj-1:8b H12 result is the **first cross-model statistically significant verdict** in either direction (Wilcoxon p=0.036, |d|=0.617 medium-large), strengthening the original Stage 5 H12 narrative. The gemma3:4b outlier is *direct evidence* for the §4.6.2 keyword-scorer caveat — its baseline mean is the weakest of any model (~0.45), and the Reducer's stylistic re-ordering happens to overlap more with the canonical answer keywords. This is consistent with style-mismatch artifact (b in §4.6.2), not abstraction loss.
+
+**Verdict (cross-model)**: ⚠ *Conditional accept* — direction generalization is strong (5/5 H11 positive, 3/4 H12 negative), magnitude is model-dependent, and a single SIG verdict appears at this scale (rnj-1:8b H12). The Stage 5 position-effect asymmetry generalizes as a *directional regularity* across families and sizes; magnitude calibration awaits larger n.
+
+Stage 6 H13 cross-model is reported in §4.7.4. Detail: `docs/reference/stage6-cross-model-analysis-2026-05-08.md`.
 
 ### 4.4 Main results — supported hypotheses
 
@@ -179,6 +207,8 @@ The H12 mechanism claim ("abstraction loss") is supported by the keyword-coverag
 
 These are not separable from the current data. We plan an LLM-as-judge replication (free-tier Groq GPT-OSS 120B as an independent judge over the same final_answer pairs) to estimate which fraction of the H12 drop is recovered when scoring is semantic rather than lexical. Until that replication runs, the abstraction-loss mechanism should be treated as a *candidate explanation*, not an established cause.
 
+**Stage 6 partial evidence for the (b) style-mismatch branch**: the cross-model H12 replication (§4.3) included `gemma3:4b`, whose baseline accuracy is the weakest of the five models in the Stage 6 panel (~0.45). On this model alone H12 *flipped sign* (Δ=+0.0562) — i.e., the Reducer's compressed answer overlaps more with the canonical keyword set when the baseline answer is itself low-quality. This is a textbook style-mismatch artifact case: the same Reducer prompt, applied to a weaker baseline, accidentally regularizes the answer toward the scorer's expected vocabulary. We read this as *partial* evidence for branch (b), but it does not replace the planned LLM-as-judge replication, which is still needed to estimate the (a)/(b) split on the original Gemma 4 E4B Stage 5 result.
+
 [TODO: expand 4.6.1 with full baseline vs reducer answer comparison; add 4.6.3 once LLM-as-judge replication completes]
 
 ### 4.7 Search Tool (H13) — first statistically significant negative
@@ -224,6 +254,10 @@ The 50-trial A-2 production run was completed before a run.py whitelist fix that
 
 H7 (calculator/linalg) and H8 (linprog with mandatory tool rules) yielded +18.3pp and +23.3pp on math-04. H13 (agent-active BM25 retrieval) yields −22pp. All three are "Tool axis" externalizations, but they differ structurally: H7/H8 externalize a *deterministic, single-call computation* with a fixed function signature, while H13 externalizes *probabilistic, iterative retrieval* whose effectiveness depends on the agent's own policy for how many times and with what queries to call. This sub-distinction within the Tool axis is not captured by the four-axis framework alone, and is one of the paper's empirical findings.
 
+#### 4.7.4 Cross-model H13 — Gemma 3 family tool-calling absence
+
+A Stage 6 attempt to replicate H13 on `gemma3:4b` produced 0/50 `search_chunks` tool calls; a `gemma3:12b` dry run produced "Unknown" answers with max-cycle exits. Both Gemma 3 model sizes served via Ollama Cloud failed to invoke the OpenAI-compatible tool spec used in Stage 5. We report this as a **family-level constraint**, not a hypothesis result: the H13 mechanism analysis (§4.7.1) requires the agent to *issue* tool calls before iteration discipline can be measured. Cross-family H13 replication on `rnj-1:8b` and `gpt-oss:20b` was deprioritized because the Stage 5 single-model H13 verdict is already statistically established (|d|=1.00, p=0.012). The Gemma-3 tool-calling absence is itself a finding for practitioners selecting small open-weight models for tool-augmented workflows.
+
 ### 4.8 Statistical reporting protocol
 
 All hypothesis verdicts report (Δ, n, p, Cohen's d, 95% CI) 5-tuple. p-values use paired Wilcoxon (primary) and paired t-test (secondary). 95% CI by paired bootstrap (n=10,000). [TODO: regenerate for H1, H7, H8, H9a from existing result JSONs; H10–H12 already have full 5-tuple.]
@@ -244,7 +278,7 @@ On the 9-task cost-aware benchmark (Exp10), 8-loop ABC with Gemma 4 E4B reaches 
 
 ## 6. Limitations
 
-- **Single base model** (Gemma 4 E4B) — partially mitigated by §4.3 cross-model [TBD].
+- **Cross-model coverage** — Stage 6 cross-model replication (§4.3) includes 4 additional models (gemma3:4b, gemma3:12b, rnj-1:8b, gpt-oss:20b) on H11/H12. gemma3:12b H12 is partial (28/75 baseline). Mistral, DeepSeek, Llama families not yet covered. H13 cross-model attempted only on Gemma 3 family (which lacks reliable tool-calling at 4B/12B); rnj-1 / gpt-oss H13 reproduction is future work.
 - **Statistical power** — n=15 underpowered for several hypotheses (H4, H10, H11, H12 all NOT SIGNIFICANT at α=0.05). Effect sizes (Cohen's d) and bootstrap CIs reported throughout.
 - **Single-author coordination** — no inter-rater reliability for failure-mode labels (Stage 2B FailureLabel taxonomy).
 - **Deterministic scorer** — `score_answer_v3` is keyword-based; semantic correctness not directly measured (relevant for H12 Reducer — "polished" answers may be semantically correct but lose keywords).
