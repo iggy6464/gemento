@@ -4,7 +4,7 @@ status: in_progress
 updated_at: 2026-05-09
 mirror_of: docs/reference/researchNotebook.md (Part 1 — Closed Findings)
 language: en
-note: 2026-05-09 v5 — Stage 6 v2 update (6-model panel + capability-floor finding). 6/7 H11 (1 outlier), H12 family-systematic (Gemma 3 2/2 positive vs non-Gemma 4/4 negative — direct §4.6.2 caveat evidence), H13 family-agnostic small-dense fail at 8B (M2 capability floor) — minimum operational size ≈ Gemma 4 E4B
+note: 2026-05-09 v6 — Stage 6 v3 (gemma4:31b H13 added). M2 split into 4 sub-variants (M2-a/b/c/d). H13 (M1) measurable = Gemma 4 E4B only — *specific-model identification*, not size threshold. A-agent JSON-schema contract = measurement-tool fit caveat. Paper §1.3 narrowing.
 ---
 
 > **Conceptual framework canonical document**: [conceptFramework.md](./conceptFramework.md) — 4-axis externalization principles, terminology definitions, axis ↔ experiment mapping.
@@ -1067,32 +1067,36 @@ Six of seven values are positive — the H11 direction (pre-stage Extractor help
 
 H12 splits cleanly along family lines: **Gemma 3 family 2/2 positive** (gemma3:4b +0.056, gemma3:12b +0.008), **non-Gemma family 4/4 negative** (Stage 5 Gemma 4 E4B −0.071, rnj-1:8b −0.099 SIG, gpt-oss:20b −0.010, ministral-3:8b −0.071). This is a *family-systematic* pattern, not a single-outlier observation. The rnj-1:8b H12 result is the **first cross-model statistically significant verdict** in either direction (Wilcoxon p=0.036, |d|=0.617 medium-large) and supports the post-stage Reducer = abstraction-loss claim at the family level for non-Gemma models. The Gemma 3 family inversion (2/2 positive) is *direct family-level evidence* for paper §4.6.2 style-mismatch caveat (b): a learned output-style bias in Gemma 3 such that Reducer's compression accidentally regularizes the answer toward the scorer's expected vocabulary. The Gemma 4 E4B baseline (Stage 5) belongs to the non-Gemma group on this pattern, suggesting the bias is *Gemma-3-specific, not Gemma-family-wide*.
 
-### H13 (Search Tool) — Family-agnostic small-dense capability floor (Stage 6 v2)
+### H13 (Search Tool) — Specific-model identification, M2 4 sub-variants (Stage 6 v3)
 
-Stage 6 v2 ran H13 on four small-dense models. **All four failed to operate the search-tool ABC chain**, with two distinguishable failure modes:
+Stage 6 v3 (2026-05-09) ran H13 on five small-and-mid dense models including a Gemma 4 same-family size-up control (gemma4:31b). **All five failed to operate the search-tool ABC chain**, with **four distinguishable M2 sub-variants** plus the Stage 5 (M1) under-iteration mode:
 
 | Model | family | size | failure mode |
 |---|---|---|---|
-| Gemma 4 E4B (Stage 5) | Gemma 4 | 4B effective | (M1) tool-calling present, **under-iteration** on multi-hop — Δ=−0.220 SIG |
-| gemma3:4b | Gemma 3 | 4B | (M2) **tool-calling absence** — 0/50 calls |
-| gemma3:12b | Gemma 3 | 12B | (M2) tool-calling not invoked — "Unknown" + max-cycle |
-| ministral-3:3b | Mistral 3 | 3B | (M2) tool-calls present + final_answer never produced |
-| ministral-3:8b | Mistral 3 | 8B | (M2) tool-calls present + final_answer never produced (44/50 errors) |
+| Gemma 4 E4B (Stage 5) | Gemma 4 | 4B effective | **(M1) under-iteration on multi-hop** — tool-calling present, premature termination — Δ=−0.220 SIG |
+| gemma3:4b | Gemma 3 | 4B | (M2-a) tool-calling absence — 0/50 calls |
+| gemma3:12b | Gemma 3 | 12B | (M2-b) tool-calling not invoked — "Unknown" + max-cycle |
+| ministral-3:3b | Mistral 3 | 3B | (M2-c) tool-calls + final_answer never produced (50/50) |
+| ministral-3:8b | Mistral 3 | 8B | (M2-c) tool-calls + final_answer never produced (44/50) |
+| **gemma4:31b** | **Gemma 4** | **31B** | **(M2-d) A-agent JSON schema mismatch** — tool-calls present, post-tool text response fails the expected assertions-JSON contract → assertions=0 across all cycles, never converged (45/50, 90%) |
 
-The mechanism narrative splits in two: **(M1) under-iteration on multi-hop** (Gemma 4 E4B only), and **(M2) capability floor — full no-convergence** (the other four small-dense models tested, family-agnostic, persisting up to 8B parameters). Within our cross-model panel, **Gemma 4 E4B is the only small dense model that operates at all under H13**, and it does so by displaying (M1). The original Stage 5 contribution claim — "tool-axis iteration discipline determines the sign of the externalization effect" — is therefore *conditional on the model clearing the M2 capability floor*. Practical implication: the *minimum operational size* for the 4-axis framework with an agent-iterative tool ≈ Gemma 4 E4B (effective 4B). Cross-family H13 replication on larger or non-dense models (rnj-1:8b, gpt-oss:20b) is future work and would inform whether iteration-discipline (M1) is observable beyond Gemma 4 E4B.
+**gemma4:31b paper-relevant note**: `baseline_abc_chunked` (no tool, document supplied directly in prompt) achieved 50/50 trials with mean_acc 0.95 — the model reads 26K-token documents fluently within the ABC chain. The H13 failure is *strictly* in the search-tool A-agent JSON-schema contract, not a capability deficit.
+
+The H13 mechanism therefore splits into M1 (Gemma 4 E4B) and 4 M2 sub-variants across 5 other models. Within our cross-model panel, **(M1) iteration-effect is observable on *exactly one* model — Gemma 4 E4B (effective 4B)**. Same-family size-up (gemma4:31b) does *not* preserve M1; it joins the M2 group via (M2-d). The "minimum operational size" claim narrows from a *size threshold* to a **specific-model identification**: the 4-axis framework with our current A-agent JSON-schema contract operates only on Gemma 4 E4B in this panel. We treat this as a *measurement-tool fit* finding rather than a claim about intrinsic framework limits — alternative A-agent contracts may broaden M1 observability across models. Cross-family H13 replication on `rnj-1:8b` and `gpt-oss:20b` and contract-revision experiments are future work.
 
 **Capability floor below 4B — ministral-3:3b** (3B dense, Mistral 3 family) failed both tool-free H11 (47/150 errors = 31.3%, exceeding the Stage 2A 30% reject gate) and H13 search-tool (50/50 errors = 100%). H13 baseline_chunked on the same model (no tool, document supplied directly) produced 0/50 errors with mean accuracy 0.840 — i.e., ministral-3:3b reads documents fine but cannot sustain the multi-cycle ABC chain. This sets a lower-bound data point for the framework's operating regime.
 
-### H14 verdict v2 (Architect, 2026-05-09)
+### H14 verdict v3 (Architect, 2026-05-09)
 
-⚠ **Conditional accept — direction generalization strong, family-systematic pattern discovered, mechanism split into two branches, single SIG at this scale**:
+⚠ **Conditional accept — direction generalization strong, family-systematic pattern discovered, mechanism 5-mode split (M1 + 4 M2 sub-variants), single SIG, *measurement-tool fit caveat***:
 - H11 direction: 6/7 positive (one outlier, ministral-3:8b — saturation hypothesis).
 - H12 direction: family-systematic — Gemma 3 family 2/2 positive (direct family-level evidence for §4.6.2 style-mismatch caveat (b)), non-Gemma family 4/4 negative (rnj-1:8b SIG p=0.036).
-- H13 mechanism: split into **(M1) under-iteration** (Gemma 4 E4B only) and **(M2) capability floor** (4 other small-dense models tested, family-agnostic, up to 8B).
-- Minimum operational size for 4-axis externalization framework with agent-iterative tool ≈ Gemma 4 E4B (effective 4B) — identified by exclusion (only working model in the small-dense panel).
+- H13 mechanism: split into **(M1) under-iteration** (Gemma 4 E4B *only*) and **(M2) capability floor — 4 sub-variants** (M2-a tool-calling absence, M2-b not-invoked, M2-c final_answer non-production, M2-d A-agent JSON-schema mismatch — gemma4:31b new finding).
+- **H13 (M1) iteration effect is observable on *exactly one* model — Gemma 4 E4B**. Same-family size-up (gemma4:31b) fails via M2-d; this is *not* a size threshold but a **specific-model identification**.
+- gemma4:31b `baseline_abc_chunked` 95% acc / 0% errors confirms model capability is sufficient; the H13 failure is *strictly* in the A-agent JSON-schema contract — a *measurement-tool fit* between Gemma 4 E4B and our specific A-agent contract.
 - ministral-3:3b 3B = capability floor breach (H11 31.3% reject, H13 100% reject) — lower-bound data point.
 
-The Stage 5 findings — Position-Effect asymmetry (H11/H12) and Tool-axis iteration effect (H13) — generalize as directional regularities under refined conditions: the H11/H12 directions hold across families and sizes (with one Mistral 3 outlier on H11 and a Gemma-3-specific style inversion on H12), and the H13 iteration-discipline framing is *conditional* on clearing the M2 capability floor. Within our 4-axis externalization framework, **a small dense model below ~4B effective does not operate the agent-iterative search chain at all**, and the M1 under-iteration story is observable only on Gemma 4 E4B in this panel.
+The Stage 5 findings — Position-Effect asymmetry (H11/H12) and Tool-axis iteration effect (H13) — generalize as follows after Stage 6 v3: H11/H12 directions hold across families and sizes (with one Mistral 3 outlier on H11 and a Gemma-3-specific style inversion on H12, both characterized rather than dismissed). The H13 (M1) iteration-effect framing is *Gemma 4 E4B-specific* under the current A-agent contract. We acknowledge this as a measurement-tool-fit narrowing of §1.3 contribution-1: future work revising the A-agent JSON-schema contract may broaden M1 observability and is left as a deferred item.
 
 ### Stage 5 ↔ Stage 6 integrated narrative
 

@@ -2,7 +2,7 @@
 type: result
 status: in_progress
 updated_at: 2026-05-09
-experiment: Stage 6 — Cross-model replication v2 (6 model + 1 capability-floor finding)
+experiment: Stage 6 — Cross-model replication v3 (6 model H11/H12 + 5 model H13 + M2 sub-variants 분화)
 ---
 
 # Stage 6: Cross-model replication 결과 보고서 v2
@@ -48,34 +48,41 @@ experiment: Stage 6 — Cross-model replication v2 (6 model + 1 capability-floor
 
 → **Gemma 3 family 2/2 양수**, **non-Gemma 4/4 음수**. *family-systematic pattern* = paper §4.6.2 의 *style mismatch caveat* 직접 evidence.
 
-## 4. H13 cross-model — Family-agnostic small-dense capability floor
+## 4. H13 cross-model — **Specific-model identification (size threshold 아님)**
 
 | 모델 | search_tool 작동 | failure mode |
 |---|---|---|
-| Gemma 4 E4B (Stage 5) | partial (1-call premature) | M1 under-iteration → Δ=−0.220 SIG |
-| gemma3:4b | 0/50 calls | M2 tool-calling absence |
-| gemma3:12b | "Unknown" max-cycle | M2 tool-calling not invoked |
-| ministral-3:3b | 100% no-converge | M2 tool-calls + final_answer 0 |
-| **ministral-3:8b** | **100% no-converge (44/50 errors)** | **M2 tool-calls + final_answer 0** ⚠ |
+| Gemma 4 E4B (Stage 5) | partial (1-call premature) | **(M1) under-iteration** → Δ=−0.220 SIG |
+| gemma3:4b | 0/50 calls | (M2-a) tool-calling absence |
+| gemma3:12b | "Unknown" max-cycle | (M2-b) tool-calling not invoked |
+| ministral-3:3b | 100% no-converge | (M2-c) tool-calls + final_answer 0 |
+| ministral-3:8b | 100% no-converge (44/50) | (M2-c) tool-calls + final_answer 0 |
+| **gemma4:31b** | **90% fail (45/50)** | **(M2-d) A-agent JSON schema mismatch** ⚠ NEW |
 
-→ **8B 까지 family 무관 100% fail**. Gemma 4 E4B 이 small dense 중 *유일하게 작동* — *minimum operational size threshold* ≈ Gemma 4 E4B 급.
+→ **5 small-and-mid dense 모델 모두 H13 fail. Gemma 4 E4B 만 (M1) 으로 측정 가능.** 동일 family 31B 도 fail (M2-d) — **size 가 아닌 *specific-model identification***.
 
-### Mechanism 분기
+**gemma4:31b baseline_chunked (no tool) 결과**: 50/50 trial, mean_acc **0.95**, errors 0/50 → 모델 자체는 26K-token document ABC chain 정상 처리. 실패는 *strictly* A-agent search-tool JSON schema contract 부합 실패.
 
-- **(M1) under-iteration on multi-hop**: Gemma 4 E4B 한정 (Stage 5 §4.7.1 mechanism)
-- **(M2) capability floor — full no-converge**: gemma3 family + Mistral 3 family (3B/8B) — *다른 4 small dense 모델 모두 해당*
+### Mechanism — M1 + M2 (4 sub-variants)
 
-→ paper §4.7.1 mechanism narrative *두 갈래로 분기*. §1.3 contribution 1 재해석: "Tool axis 는 capability floor 위에서만 의미 있음. minimum operational size ≈ Gemma 4 E4B".
+- **(M1) under-iteration on multi-hop** — Gemma 4 E4B *한정*
+- **(M2-a) tool-calling absence** — gemma3:4b
+- **(M2-b) tool-calling not invoked** — gemma3:12b
+- **(M2-c) final_answer 미생성** — ministral-3:3b/8b
+- **(M2-d) A-agent JSON schema mismatch** ⚠ NEW — gemma4:31b
+
+→ paper §4.7.4 mechanism narrative 5-mode 분화. §1.3 contribution 1 *narrowing*: "iteration effect (M1) 측정은 *Gemma 4 E4B 한정* — A-agent JSON-schema contract 가 *measurement-tool fit*. 다른 contract 는 다른 모델에서 M1 측정 가능할 수 있음".
 
 ## 5. 결론
 
-### H14 verdict v2
+### H14 verdict v3
 
-⚠ **조건부 채택 (direction match 강함, family-systematic pattern 발견, 단일 SIG)**:
-- H11: 6/7 양수, 1 outlier — direction match strong but not unanimous
+⚠ **조건부 채택 (direction match 강함, family-systematic pattern, mechanism 5-mode 분화, single SIG, *measurement-tool fit caveat*)**:
+- H11: 6/7 양수, 1 outlier (ministral-3:8b)
 - H12: family-systematic (Gemma 3 양수 / non-Gemma 음수) — *style-mismatch caveat 직접 evidence*
-- H13: family-agnostic small-dense fail — *minimum operational size threshold* 식별
+- H13: 5 small-and-mid dense 모델 모두 fail. **(M1) measurable — Gemma 4 E4B 한정**. **(M2) 4 sub-variants 분화**. *Specific-model identification*, size threshold 아님.
 - 통계 유의: rnj-1:8b H12 (p=0.036, |d|=0.617)
+- A-agent JSON-schema contract 의 *measurement-tool fit* 명시 (paper §4.7.4 / §6 limitations)
 
 ### Stage 5 ↔ Stage 6 v2 통합 narrative
 
@@ -100,3 +107,4 @@ experiment: Stage 6 — Cross-model replication v2 (6 model + 1 capability-floor
 
 - 2026-05-08 v1: 5 model H11 (5/5 양수) + 3 model H12 (3/4 음수) + Gemma 3 family tool-calling 부재.
 - 2026-05-09 v2: gemma3:12b H12 final + ministral-3:8b 추가 + ministral-3:3b capability floor finding + H13 family-agnostic small-dense fail. Narrative 갱신: 6/7 H11 + family-systematic H12 + Mechanism 분기 (M1/M2) + minimum operational size threshold.
+- 2026-05-09 v3: gemma4:31b H13 추가 (Gemma 4 family same-family size-up). search_tool 90% fail — **(M2-d) A-agent JSON schema mismatch** sub-variant 발견. baseline_chunked 95% acc 정상 → 모델 capability 가 아닌 contract fit 문제. **H14 verdict 갱신**: H13 작동 = *Gemma 4 E4B 한정*, *size threshold* 가 아닌 *specific-model identification*. M2 4 sub-variants 분화. paper §1.3 *narrowing* + measurement-tool fit caveat 명시.
